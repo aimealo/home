@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ee7752">
+    <title>What do you want to eat today?</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        function setFavicon() {
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="30" fill="#ee7752"/>
+                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#fff" font-size="20" font-family="Microsoft JhengHei">吃</text>
+                </svg>`;
+            const favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.href = 'data:image/svg+xml,' + encodeURIComponent(svg);
+            document.head.appendChild(favicon);
+        }
+        window.addEventListener('load', setFavicon);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="wheel-container">
+            <div class="arrow"></div>
+            <div class="arrow-text"> Will you eat ?</div> <!-- 確認此行存在 -->
+            <canvas id="wheel" class="wheel"></canvas>
+        </div>
+        <div class="button-container">
+            <button class="btn start-btn" onclick="startSpin()">START</button>
+            <button class="btn retry-btn" onclick="startSpin()">AGAIN</button>
+        </div>
+        <div class="history-container">
+            
+            <div class="history-title">Option List</div>
+            <div id="history"></div>
+        </div>
+        <div class="footer-text">Enjoy your meal🥰</div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

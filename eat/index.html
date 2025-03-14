@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ee7752">
+    <title>今天想吃啥？</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        function setFavicon() {
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="30" fill="#ee7752"/>
+                    <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#fff" font-size="20" font-family="Microsoft JhengHei">吃</text>
+                </svg>`;
+            const favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.href = 'data:image/svg+xml,' + encodeURIComponent(svg);
+            document.head.appendChild(favicon);
+        }
+        window.addEventListener('load', setFavicon);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="wheel-container">
+            <div class="arrow"></div>
+            <div class="arrow-text"> 等下想吃啥？</div> <!-- 確認此行存在 -->
+            <canvas id="wheel" class="wheel"></canvas>
+        </div>
+        <div class="button-container">
+            <button class="btn start-btn" onclick="startSpin()">吃貨開始</button>
+            <button class="btn retry-btn" onclick="startSpin()">再來一次</button>
+           <a class="btn start-btn" href="./index.html">AimealO</a>
+        </div>
+        <div class="history-container">
+            
+            <div class="history-title">最近選項</div>
+            <div id="history"></div>
+        </div>
+        <div class="footer-text">開開心心吃吃喝喝 🥰</div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
