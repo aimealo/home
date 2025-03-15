@@ -8,12 +8,12 @@
   "theme_color": "#5cb85c",
   "icons": [
     {
-      "src": "assets/images/mbr-192x192.png",
+      "src": "assets/images/ai.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/images/mbr-512x512.png",
+      "src": "assets/images/a1.png",
       "sizes": "512x512",
       "type": "image/png"
     }
