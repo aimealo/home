@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>完整解析：115學測『4倍率篩選』如何讓滿級分考生陷入落榜危機？ - 大學備審資料服務中心</title>
+    <meta name="description" content="當第一階段門檻降低，所有人都能擠進台大窄門時，你憑什麼勝出？警告：傳統高分思維已徹底失靈，「學習歷程」才是新制下的唯一解。">
+    <meta name="keywords" content="115 學測, 四倍率 篩選, 滿級分 落榜, 學習歷程, 大學備審資料, 升學顧問, 高分低就">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 基本重置與設定 --- */
+        :root {
+            --primary-color: #0D47A1; /* 專業藍 */
+            --secondary-color: #D32F2F; /* 警示紅 */
+            --accent-color: #FFC107; /* 亮點黃 */
+            --text-dark: #212121;
+            --text-light: #FAFAFA;
+            --bg-light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        /* --- 通用元件 --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        h1 { font-size: 2.5rem; color: var(--secondary-color); }
+        h2 { font-size: 2rem; color: var(--primary-color); }
+        h3 { font-size: 1.7rem; color: var(--primary-color); margin-top: 35px; }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .text-center { text-align: center; }
+        
+        /* --- CTA 按鈕 --- */
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: #A02020;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* --- Header / Navigation --- */
+        .main-header {
+            background: #fff;
+            padding: 15px 5%;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none; /* 行動版隱藏 */
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* --- 文章頁面特定樣式 --- */
+        .article-container {
+            max-width: 800px; /* 最佳閱讀寬度 */
+        }
+        
+        .article-header h1 {
+            margin-bottom: 10px;
+        }
+        
+        .article-header .subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #555;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 20px;
+        }
+        
+        .article-content {
+            margin-top: 30px;
+        }
+        
+        .article-content ul {
+            list-style-position: inside;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+        
+        .article-content li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        
+        .article-content blockquote {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+            margin: 30px 0;
+        }
+        
+        .highlight-box {
+            background: var(--bg-light);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .cta-section {
+            background: var(--bg-light);
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        .cta-section .cta-button {
+            margin: 10px;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--text-dark);
+            color: #aaa;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .main-footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* --- RWD --- */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="index.html" class="logo">大學備審資料服務中心</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#problem">新制衝擊</a></li>
+                <li><a href="index.html#solution">獨家對策</a></li>
+                <li><a href="index.html#cases">成功案例</a></li>
+                <li><a href="index.html#final-cta" class="cta-button cta-button-secondary">立即報名</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="article-page">
+            <div class="container article-container">
+                
+                <header class="article-header">
+                    <h1>完整解析：115學測『4倍率篩選』如何讓滿級分考生陷入落榜危機？</h1>
+                    <p class="subtitle">
+                        當第一階段門檻降低，所有人都能擠進台大窄門時，你憑什麼勝出？警告：傳統高分思維已徹底失靈，「學習歷程」才是新制下的唯一解。
+                    </p>
+                </header>
+
+                <article class="article-content">
+                    <p>各位高一、高二的學生，以及時刻關心升學動態的家長與教師們：</p>
+
+                    <p>你是否還停留在「只要考高分、拚滿級分，就能上頂大」的舊思維？</p>
+
+                    <p><strong>你必須清醒！115學測新制，已經徹底改寫了這場遊戲的規則。</strong></p>
+
+                    <p>你聽到的「4倍率篩選」放寬，不是福音，而是最殘酷的陷阱。它正讓「滿級分落榜」和「高分低就」的案例，從「特例」變成「常態」。</p>
+
+                    <p>「大學備審資料服務中心」在此為你深度拆解，為什麼 4 倍率是所有「高分群考生」的致命危機。</p>
+
+                    <h3>什麼是「4倍率篩選」的殘酷真相？</h3>
+
+                    <p>讓我們用一個簡單的例子說明：</p>
+                    <ul>
+                        <li><strong>舊制 (3倍率)：</strong> 台大 A 系要招 10 人。一階最多篩選 30 人 (10 x 3) 進入二階面試。</li>
+                        <li><strong>新制 (4倍率)：</strong> 台大 A 系要招 10 人。一階將篩選 <strong>40 人</strong> (10 x 4) 進入二階面試。</li>
+                    </ul>
+                    <p>你看懂了嗎？</p>
+                    <p>這代表，<strong>有整整 40 個人要搶 10 個名額！</strong></p>
+                    <p>這等於宣告：<strong>第一階段（學測）的「分數門檻」被大幅削弱了。</strong></p>
+
+                    <h3>危機一：滿級分不再是「特權」，只是「基本盤」</h3>
+                    <p>過去，學測 60 滿級分是金光閃閃的保證。但在 4 倍率下，以前可能在 3 倍率就被刷掉的 58、59 級分學生，現在「通通」都能進入第二階段。</p>
+                    <p>當 40 個進入面試的學生中，有 30 個都是 58 級分以上的高分群時，請問：</p>
+                    <p><strong>教授該如何從 30 個「看起來都一樣優秀」的學生中，只挑出 10 個人？</strong></p>
+                    <p>答案很明顯：<strong>學測分數，在那一刻已經「失去鑑別度」。</strong></p>
+
+                    <h3>危機二：你的對手暴增，3/4 的人注定「陪跑」</h3>
+                    <p>4 倍率，意味著錄取率的分子不變（10人），但分母（40人）被撐大了。</p>
+                    <p>這代表，<strong>你將面對多出 33% 的競爭者</strong>。這些人過去可能連面試的門票都拿不到，但現在他們和你站在同一個起跑線上。</p>
+                    <p>更可怕的是，這 40 人中，注定有 30 人 (3/4) 會被刷掉。<strong>你敢保證，你不會是那 3/4 的「陪跑者」嗎？</strong></p>
+
+                    <h3>危機三：「學習歷程」成為唯一的決勝點</h3>
+                    <p>當分數失去意義，教授唯一能依賴的評斷標準是什麼？</p>
+                    <p>就是<strong>「學習歷程檔案」</strong>與<strong>「面試表現」</strong>。</p>
+                    
+                    <blockquote>
+                        「分數，決定你『能不能』申請；<br>歷程，決定你『會不會』錄取。」
+                    </blockquote>
+                    
+                    <p>你還在花大錢補才藝、做志工，以為把檔案「塞滿」就好？那些「罐頭履歷」（Canned Portfolio），教授連看都不想看。</p>
+                    <p>他們想看的，是能證明你「專長與興趣」的<strong>深度連結</strong>。</p>
+                    <ul>
+                        <li>你家裡務農，你把協助農務的經驗，寫成了對園藝與農業管理的深度探究。</li>
+                        <li>你幫鄰居寫過訴狀，你把它變成了對法律系「程序正義」的思辨。</li>
+                    </ul>
+                    <p>这，才是打敗其他 39 個高分對手的「關鍵武器」。</p>
+
+                    <div class="highlight-box">
+                        <h3>【真實案例】分數不突出，也能進台大</h3>
+                        <p>在「大學備審資料服務中心」，我們輔導過校排 400 多名的學生，學測成績並非頂尖，但我們協助他深度挖掘「身邊資源」，打造出獨一無二的黃金履歷，最終成功錄取台大。</p>
+                        <p>這在新制下，只會發生得更頻繁。</p>
+                        <p><strong>反之，「滿級分、零特色」的學生，將成為最大的犧牲品。</strong></p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>給家長與學生的最後警告：</h3>
+                        <p><strong>不要再等到高三才開始準備！</strong></p>
+                        <p>115 學測的戰場，早已從高三的考場，提前到從國中、高一就開始的「學習歷程佈局」。</p>
+                        <p>你是否還在：</p>
+                        <ul>
+                            <li>❌ 誤以為 4 倍率是利多，可以放鬆？</li>
+                            <li>❌ 還在花冤枉錢，補習和科系無關的才藝？</li>
+                            <li>❌ 認為分數夠高，就能輾壓一切？</li>
+                        </ul>
+                        <p><strong>別讓三年的努力，毀在錯誤的升學思維上！</strong></Request>
+                        <p>「大學備審資料服務中心」的價值，就是成為你的升學戰略顧問。我們不只教你「做」歷程，我們教你如何在新制賽道上「贏」。</p>
+                    </div>
+
+                </article>
+
+                <section class="cta-section text-center">
+                    <h2>戰局已變，你還在原地等待？</h2>
+                    <p>立即報名<strong>「大學備審資料服務中心 - 115新制破解線上說明會」</strong></p>
+                    
+                    <a href="https://forms.gle/GnszEnCj6PsYrevDA" target="_blank" class="cta-button">
+                        👉 點我立即報名說明會
+                    </a>
+                    
+                    <p style="margin-top: 20px;">加入官方 LINE，立即領取<strong>《新制學習歷程SOP檢查表》</strong>，免費預約 15 分鐘一對一履歷健檢！</p>
+                    
+                    <a href="https://lin.ee/VSov05V" target="_blank" class="cta-button cta-button-secondary">
+                        👉 點我加入LINE，領取免費資源
+                    </a>
+                </section>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 大學備審資料服務中心. All Rights Reserved.</p>
+            <p>聯繫我們：<a href="https://lin.ee/VSov05V" target="_blank">LINE 官方帳號: @991cpkzh</a> | (07) 365-6039</p>
+        </div>
+    </footer>
+
+</body>
+</html>

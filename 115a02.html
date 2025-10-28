@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>教授最討厭的5種「罐頭學習歷程」(內附破解法) - 大學備審資料服務中心</title>
+    <meta name="description" content="你的歷程是「充實」還是「堆砌」？別讓三年的努力變成教授眼中的Ctrl+C。立即健檢你的檔案，看懂教授真正想看的「獨特性」。">
+    <meta name="keywords" content="學習歷程 罐頭, 學習歷程 怎麼做, 教授 討厭, 備審資料, 大學申請, 學習歷程 範本, 備審資料 範本">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 基本重置與設定 --- */
+        :root {
+            --primary-color: #0D47A1; /* 專業藍 */
+            --secondary-color: #D32F2F; /* 警示紅 */
+            --accent-color: #FFC107; /* 亮點黃 */
+            --text-dark: #212121;
+            --text-light: #FAFAFA;
+            --bg-light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        /* --- 通用元件 --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        h1 { font-size: 2.5rem; color: var(--secondary-color); }
+        h2 { font-size: 2rem; color: var(--primary-color); }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .text-center { text-align: center; }
+        
+        /* --- CTA 按鈕 --- */
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: #A02020;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* --- Header / Navigation --- */
+        .main-header {
+            background: #fff;
+            padding: 15px 5%;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none; /* 行動版隱藏 */
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* --- 文章頁面特定樣式 --- */
+        .article-container {
+            max-width: 800px; /* 最佳閱讀寬度 */
+        }
+        
+        .article-header h1 {
+            margin-bottom: 10px;
+        }
+        
+        .article-header .subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #555;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 20px;
+        }
+        
+        .article-content {
+            margin-top: 30px;
+        }
+
+        /* (!!NEW!!) 文章內容 H3 (罐頭標題) 使用警示紅色 */
+        .article-content h3 {
+             color: var(--secondary-color);
+             font-size: 1.7rem;
+             margin-top: 40px; /* 每個罐頭之間拉開距離 */
+        }
+        
+        .article-content ul {
+            list-style: none; /* 移除預設點 */
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+        
+        .article-content li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            line-height: 1.8;
+            position: relative;
+            padding-left: 30px; /* 騰出空間放 icon */
+        }
+
+        /* (!!NEW!!) 列表 icon 樣式 */
+        .article-content li::before {
+            content: '❌'; /* 預設錯誤 */
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .article-content li.solution-li::before {
+            content: '💡'; /* 破解法 icon */
+        }
+
+        .article-content blockquote {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+            margin: 30px 0;
+        }
+
+        /* (!!NEW!!) 破解法區塊樣式 */
+        .solution-box {
+            background: #E3F2FD; /* 淺藍底色 */
+            border-left: 5px solid var(--primary-color);
+            padding: 20px 20px 20px 30px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .solution-box h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .cta-section {
+            background: var(--bg-light);
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--text-dark);
+            color: #aaa;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .main-footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* --- RWD --- */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="index.html" class="logo">大學備審資料服務中心</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#problem">新制衝擊</a></li>
+                <li><a href="index.html#solution">獨家對策</a></li>
+                <li><a href="index.html#cases">成功案例</a></li>
+                <li><a href="index.html#final-cta" class="cta-button cta-button-secondary">立即報名</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="article-page">
+            <div class="container article-container">
+                
+                <header class="article-header">
+                    <h1>教授最討厭的5種「罐頭學習歷程」(內附破解法)</h1>
+                    <p class="subtitle">
+                        你的歷程是「充實」還是「堆砌」？別讓三年的努力變成教授眼中的 Ctrl+C。立即健檢你的檔案，看懂教授真正想看的「獨特性」。
+                    </p>
+                </header>
+
+                <article class="article-content">
+                    <p>致所有努力的高中生與家長：</p>
+                    <p>你是否花了無數時間，參加營隊、考取證照、擔任幹部，只為了讓學習歷程檔案看起來「很豐富」？</p>
+                    <p>然而，在「大學備審資料服務中心」的輔導經驗中，我們發現一個殘酷的事實：<strong>90% 的學生都在製作「罐頭履歷」</strong>。這些檔案看起來大同小異，缺乏靈魂，正是教授們篩選時最先刷掉的對象。</p>
+                    <p>尤其在「4倍率篩選」新制下，人人有機會進入二階，你的履歷若無法在 3 分鐘內抓住教授眼球，再高的分數也沒用！</p>
+                    <p>以下，我們揭露教授最討厭的 5 種「罐頭學習歷程」，並提供精準破解法。</p>
+
+                    <h3>1. 才藝堆砌罐</h3>
+                    <p>這種履歷像在展示「才藝清單」，列出鋼琴八級、圍棋五段、程式設計證照... 看似十項全能，但教授心中充滿問號。</p>
+                    <ul>
+                        <li>❌ <b>罐頭內容：</b>申請法律系，但放了 80% 篇幅在講鋼琴檢定和游泳比賽的心路歷程。</li>
+                        <li>❌ <b>教授OS：</b>「很好，但...這跟法律系有什麼關係？」</li>
+                    </ul>
+                    <div class="solution-box">
+                        <h4>💡 破解法：「關聯性」才是王道</h4>
+                        <p><strong>重點不在「才藝本身」，而在「才藝培養出的能力」如何連結科系。</strong></p>
+                        <p class="solution-li">申請法律系，可以不提鋼琴，但要提你從「圍棋」學到的「邏輯佈局與策略推演」，這才是法律系看重的特質。</p>
+                        <p class="solution-li">申請資工系，可以強調「彈奏複雜樂譜」所展現的「拆解結構與高度專注力」。</p>
+                    </div>
+
+                    <h3>2. 志工打卡罐</h3>
+                    <p>許多學生以為志工時數越多越好，於是檔案中充滿了淨灘、育幼院服務的照片，卻沒有任何實質反思。</p>
+                    <ul>
+                        <li>❌ <b>罐頭內容：</b>「我參加了 OOO 淨灘，總時數 20 小時，我覺得很有意義，要愛護地球。」</li>
+                        <li>❌ <b>教授OS：</b>「這是『心得』還是『打卡』？你學到了什麼？」</li>
+                    </ul>
+                    <div class="solution-box">
+                        <h4>💡 破解法：「質」遠大於「量」</h4>
+                        <p><strong>教授不想看你「做了多少」，想看你「想了多深」。</strong></p>
+                        <p class="solution-li">與其列 5 場活動，不如精選 1 場。深入描述你「觀察到的問題」（例如：為何垃圾都是同類型？），你「嘗試解決的方法」（例如：分類統計並向主辦方提議），以及這個經驗如何「啟發你對公共政策/環境工程的興趣」。</p>
+                    </div>
+
+                    <h3>3. 書單轟炸罐</h3>
+                    <p>為了展現閱讀量，學生在「多元表現」中放上 20 本書的封面，從《被討厭的勇氣》到《槍砲、病菌與鋼鐵》，但沒有一篇像樣的摘要。</p>
+                    <ul>
+                        <li>❌ <b>罐頭內容：</b>一份「我的推薦書單」PDF，只有書名和作者。</li>
+                        <li>❌ <b>教授OS：</b>「你真的都讀完了嗎？還是只是複製貼上？」</li>
+                    </ul>
+                    <div class="solution-box">
+                        <h4>💡 破解法：「深度」勝於「廣度」</h4>
+                        <p><strong>挑 3 本「真正」與你申請科系相關的經典書籍。</strong></p>
+                        <p class="solution-li">不要寫「讀書心得」，要寫「讀書『評論』」。這本書的論點是什麼？你同意嗎？你（因為這本書）去做了什麼延伸探究？這才是教授想看的「自主學習」能力。</p>
+                    </div>
+
+                    <h3>4. 證書蒐集罐</h3>
+                    <p>檔案裡充滿了各種營隊證書、線上課程（如 Coursera, APCS）的完課證明，像在集點卡一樣。</p>
+                    <ul>
+                        <li>❌ <b>罐頭內容：</b>附上 10 張證書，標題是「我的多元學習」。</li>
+                        <li>❌ <b>教授OS：</b>「參加不等於學會。你『用』這些技能做了什麼？」</li>
+                    </ul>
+                    <div class="solution-box">
+                        <h4>💡 破解法：「應用」才是關鍵</h4>
+                        <p><strong>證書只是「起點」，不是「終點」。</strong></p>
+                        <p class="solution-li">上了 Python 課程？請附上你用 Python 寫的小程式（例如：一個爬蟲、一個數據分析）。</p>
+                        <p class="solution-li">參加了領導力營隊？請說明你如何將學到的技巧，應用在「擔任班級幹部」或「籌辦校慶活動」上，並展示「成果」（例如：活動流程表、SOP）。</p>
+                    </div>
+
+                    <h3>5. 美編設計罐</h3>
+                    <p>這類學生花了 80% 的時間在「美化」履歷。使用華麗的 Canva 模板、多種字體、繽紛的插圖，內容反而空洞無物。</p>
+                    <ul>
+                        <li>❌ <b>罐頭內容：</b>精美的排版，但重點（例如：專題研究動機）只用 20 個字帶過。</li>
+                        <li>❌ <b>教授OS：</b>「資訊在哪？我是在看設計稿，還是在審核備審？」</li>
+                    </ul>
+                    <div class="solution-box">
+                        <h4>💡 破解法：「清晰」是最高原則</h4>
+                        <p><strong>除非你申請設計系，否則「內容為王」。</strong></img alt="一張清晰易讀的備審資料範例">
+                        <p class="solution-li">使用乾淨、一致的版面。用「粗體字」和「標題」幫教授畫重點。讓教授在 30 秒內就能抓到你的「核心亮點」。</p>
+                        <p class="solution-li">記住：你是在「傳達資訊」，不是在「做海報」。</p>
+                    </div>
+
+                    <blockquote>
+                        你的學習歷程，是「獨一無二的故事」，<br>還是「可以隨時替換的罐頭」？
+                    </blockquote>
+                    <p>在 4 倍率篩選的激烈競爭下，一份「罐頭履歷」等於是自動放棄入場券。教授想看見的，是你如何從「身邊資源」（例如：家中務農、幫鄰居寫訴狀）發展出「獨特專長」的過程。</p>
+                    <p>「大學備審資料服務中心」的核心，就是協助你「拒絕罐頭」，挖掘你身上獨一無二的黃金素材，從國中、高一就開始策略性佈局。</p>
+                    
+                </article>
+
+                <section class="cta-section text-center">
+                    <h2>你的履歷是哪一種罐頭？</h2>
+                    <p>別讓三年的努力，敗給一份沒有「靈魂」的檔案！</p>
+                    
+                    <a href="https://forms.gle/GnszEnCj6PsYrevDA" target="_blank" class="cta-button">
+                        👉 報名說明會，學習「黃金履歷」打造術
+                    </a>
+                    
+                    <p style="margin-top: 20px;">加入官方 LINE，立即領取<strong>《新制學習歷程SOP檢查表》</strong>，免費預約 15 分鐘一對一履歷健檢！</p>
+                    
+                    <a href="https://lin.ee/VSov05V" target="_blank" class="cta-button cta-button-secondary">
+                        👉 點我加入LINE，免費履歷健檢
+                    </a>
+                </section>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 大學備審資料服務中心. All Rights Reserved.</p>
+            <p>聯繫我們：<a href="https://lin.ee/VSov05V" target="_blank">LINE 官方帳號: @991cpkzh</a> | (07) 365-6039</p>
+        </div>
+    </footer>
+
+</body>
+</html>

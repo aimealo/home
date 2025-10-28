@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>提早佈局：從高ㄧ開始建立「個人學習檔案」的黃金法則 - 大學備審資料服務中心</title>
+    <meta name="description" content="別等到高三才抱佛腳！高一是黃金探索期。我們教你用4大黃金法則，打造三年戰略地圖，讓學習歷程「贏」在起跑點。">
+    <meta name="keywords" content="學習歷程 高一, 提早佈局, 高一 學習檔案, 升學顧問, 115學測, 自主學習, 學習歷程 怎麼做, 學習歷程 範本">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 基本重置與設定 --- */
+        :root {
+            --primary-color: #0D47A1; /* 專業藍 */
+            --secondary-color: #D32F2F; /* 警示紅 */
+            --accent-color: #FFC107; /* 亮點黃 */
+            --text-dark: #212121;
+            --text-light: #FAFAFA;
+            --bg-light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        /* --- 通用元件 --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        h1 { font-size: 2.5rem; color: var(--secondary-color); }
+        h2 { font-size: 2rem; color: var(--primary-color); }
+        /* (!!NEW!!) 文章 H3 使用專業藍色，代表「建議」與「法則」 */
+        h3 { 
+            font-size: 1.7rem; 
+            color: var(--primary-color); 
+            margin-top: 35px; 
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        /* --- CTA 按鈕 --- */
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: #A02020;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* --- Header / Navigation --- */
+        .main-header {
+            background: #fff;
+            padding: 15px 5%;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none; /* 行動版隱藏 */
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* --- 文章頁面特定樣式 --- */
+        .article-container {
+            max-width: 800px; /* 最佳閱讀寬度 */
+        }
+        
+        .article-header h1 {
+            margin-bottom: 10px;
+        }
+        
+        .article-header .subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #555;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 20px;
+        }
+        
+        .article-content {
+            margin-top: 30px;
+        }
+        
+        .article-content ul {
+            list-style: none;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+        
+        .article-content li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            line-height: 1.8;
+            position: relative;
+            padding-left: 30px; /* 騰出空間放 icon */
+        }
+
+        .article-content li.solution-li::before {
+            content: '💡'; /* 破解法 icon */
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .article-content blockquote {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+            margin: 30px 0;
+        }
+        
+        /* 破解法區塊樣式 */
+        .solution-box {
+            background: #E3F2FD; /* 淺藍底色 */
+            border-left: 5px solid var(--primary-color);
+            padding: 20px 20px 20px 30px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .solution-box h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .cta-section {
+            background: var(--bg-light);
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--text-dark);
+            color: #aaa;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .main-footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* --- RWD --- */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="index.html" class="logo">大學備審資料服務中心</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#problem">新制衝擊</a></li>
+                <li><a href="index.html#solution">獨家對策</a></li>
+                <li><a href="index.html#cases">成功案例</a></li>
+                <li><a href="index.html#final-cta" class="cta-button cta-button-secondary">立即報名</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="article-page">
+            <div class="container article-container">
+                
+                <header class="article-header">
+                    <h1>提早佈局：從高ㄧ開始建立「個人學習檔案」的黃金法則</h1>
+                    <p class="subtitle">
+                        別等到高三才抱佛腳！學習歷程不是「回憶錄」，而是「三年的戰略地圖」。高一的「探索」，決定你高三的「勝率」。
+                    </p>
+                </header>
+
+                <article class="article-content">
+                    <p>給所有高一新生、家長和老師：</p>
+                    <p>當孩子剛升上高一，多數人的想法是：「先把課業顧好」、「社團先玩玩看」，至於「學習歷程檔案」？那是高二、高三的事。</p>
+                    <p><strong>這，是新制下最危險的迷思。</strong></p>
+                    <p>「大學備審資料服務中心」必須警告所有家長：在 115 學測「4倍率篩選」衝擊下，當分數鑑別度降低，**教授審查的就是你「三年來的軌跡」，而不是「高三的衝刺」**。</p>
+                    <p>等到高三才驚覺檔案空洞、毫無特色，開始花大錢參加營隊、補習才藝... 這時，你已經錯過了最寶貴的「黃金佈局期」。</p>
+
+                    <blockquote>
+                        學習歷程不是「回憶錄」，而是「戰略地圖」。<br>
+                        高三的「罐頭履歷」，永遠贏不過高一的「真實探索」。
+                    </blockquote>
+
+                    <h3>為什麼「高一」是學習歷程的黃金探索期？</h3>
+                    <p>高一，是三年中課業壓力相對最輕、可塑性最強的階段。這一年，不是要你「定型」，而是要你「探索」。</p>
+                    <p>高三學生為了升學，只能「堆砌」活動；而高一學生，有本錢「嘗試」與「犯錯」。教授一眼就能看出，你的履歷是「長期積累」還是「臨時抱佛腳」。</p>
+                    <p>我們見過太多高分學生，履歷空洞，最後高分低就。也見過高一就開始佈局的學生，即使分數不頂尖，也能憑藉「有故事」的履歷成功翻轉。</t_p>
+                    <p>把握高一，你必須遵守以下四大黃金法則：</p>
+
+                    <div class="solution-box">
+                        <h4>黃金法則一：從「廣度探索」到「深度收斂」</h4>
+                        <p class="solution-li">高一的重點是「廣度」。多參加社團、聽講座、閱讀不同領域的書籍、嘗試自主學習。你甚至可以「試錯」—— 發現自己「不喜歡」什麼，和發現「喜歡」什麼一樣重要。</p>
+                        <p class="solution-li">到了高二，再從這些廣泛的嘗試中，收斂出 1-2 個你有熱情的主題，開始「深度」探究。</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>黃金法則二：別只「做」，要「想」與「問」</h4>
+                        <p class="solution-li">學習歷程的重點不是「活動列表」，而是「反思」。參加辯論社，你學到的是「辯才」還是「邏Z輯思辨」？擔任幹部，你只是「辦活動」還是「學會了專案管理與衝突解決」？</p>
+                        <p class="solution-li">每一項活動後，都要問自己：「為什麼做？學到什麼？觀察到什麼問題？（如果重來）我會怎麼改進？」</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>黃金法則三：挖掘「身邊資源」（最強武器）</h4>
+                        <p class="solution-li">這點我們一再強調。昂貴的營隊，人人都能參加，這叫「罐頭」。但你「身邊的資源」才是獨一無二的。</p>
+                        <p class="solution-li">如同我們輔導的案例：幫家裡務農（錄取台大）、幫鄰居寫訴狀（錄取法律系）。你的家庭背景、社區問題、個人興趣（打電動、追星），全都是黃金素材！</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>黃金法則四：「紀錄」就是最強大的武器</h4>
+                        <p class="solution-li">高一的靈光一閃，到高三絕對忘光。隨手「紀錄」是高一最重要的習慣。</p>
+                        <p class="solution-li">拍下你做科展、辦活動的照片；用雲端筆記（如 Notion, Google Docs）隨手寫下你的「反思」和「提問」。這些「過程中的證據」，遠比一張精美的證書更有說服力。</p>
+                    </div>
+
+                    <h3>高一的迷茫，需要專業的「領航員」</h3>
+                    <p>高一的「探索」不是「瞎忙」。你需要的，是一位專業的升學顧問，協助你從「興趣」出發，規劃出三年的戰略地圖，在對的時間點，做對的「收斂」。</p>
+                    <p>「大學備審資料服務中心」不只是幫你「潤稿」履歷，我們是你的「個人化升學戰略顧問」。我們從高一就開始介入，引導你挖掘獨特亮點，確保你三年的每一步，都走在通往理想校系的正確道路上。</p>
+                    
+                </article>
+
+                <section class="cta-section text-center">
+                    <h2>別讓孩子的「黃金探索期」白白溜走！</h2>
+                    <p>高一的佈局，決定高三的勝率。立即預約，為孩子規劃「贏在起點」的升學藍圖。</p>
+                    
+                    
+                    
+                    <p style="margin-top: 20px;">加入官方 LINE，立即領取<strong>《新制學習歷程SOP檢查表》</strong>，免費預約 15 分鐘一對一諮詢！</p>
+                    
+                    <a href="https://lin.ee/VSov05V" target="_blank" class="cta-button cta-button-secondary">
+                        👉 點我加入LINE，免費諮詢
+                    </a>
+                </section>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 大學備審資料服務中心. All Rights Reserved.</p>
+            <p>聯繫我們：<a href="https://lin.ee/VSov05V" target="_blank">LINE 官方帳號: @991cpkzh</a> | (07) 365-6039</p>
+        </div>
+    </footer>
+
+</body>
+</html>

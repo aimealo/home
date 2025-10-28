@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>【高三生最終救援】115新制學習歷程SOP救援檢查表 - 大學備審資料服務中心</title>
+    <meta name="description" content="檔案上傳在即！你的檔案是「黃金」還是「罐頭」？3分鐘表格自測，看懂教授如何刷掉 3/4 的人！立即救援你的學習歷程。">
+    <meta name="keywords" content="學習歷程 SOP, 高三 學習歷程, 學習歷程 救援, 備審資料, 檔案上傳, 學習歷程 檢查, 4倍率篩選, 高三 備審">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 基本重置與設定 --- */
+        :root {
+            --primary-color: #0D47A1; /* 專業藍 */
+            --secondary-color: #D32F2F; /* 警示紅 */
+            --accent-color: #FFC107; /* 亮點黃 */
+            --text-dark: #212121;
+            --text-light: #FAFAFA;
+            --bg-light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        /* --- 通用元件 --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        h1 { font-size: 2.5rem; color: var(--secondary-color); }
+        h2 { font-size: 2rem; color: var(--primary-color); }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        /* --- CTA 按鈕 --- */
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: #A02020;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* --- Header / Navigation --- */
+        .main-header {
+            background: #fff;
+            padding: 15px 5%;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none; /* 行動版隱藏 */
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* --- 文章頁面特定樣式 --- */
+        .article-container {
+            max-width: 800px; /* 最佳閱讀寬度 */
+        }
+        
+        .article-header h1 {
+            margin-bottom: 10px;
+        }
+        
+        .article-header .subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #555;
+            border-bottom: 2px solid var(--bg-light);
+            padding-bottom: 20px;
+        }
+        
+        .article-content {
+            margin-top: 30px;
+        }
+        
+        .article-content h2 {
+             color: var(--secondary-color);
+             font-size: 1.7rem;
+             margin-top: 40px; 
+             text-align: center;
+        }
+
+        /* (!!NEW!!) 表格樣式 */
+        .table-wrapper {
+            overflow-x: auto; /* RWD 關鍵：讓表格在手機上可以左右滑動 */
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .sop-table {
+            width: 100%;
+            min-width: 750px; /* 確保表格內容不會擠壓得太厲害 */
+            border-collapse: collapse;
+        }
+
+        .sop-table th, .sop-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+
+        .sop-table th {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .sop-table tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+        
+        /* (!!NEW!!) 罐頭範例 (錯誤) - 紅底 */
+        .sop-table td:nth-child(3) {
+            background-color: #FFEBEE;
+            color: #777;
+            font-style: italic;
+        }
+        
+        /* (!!NEW!!) 救援對策 (正確) - 藍底 */
+        .sop-table td:nth-child(4) {
+            background-color: #E3F2FD;
+            font-weight: 700;
+        }
+
+        .sop-table .icon {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+
+        .article-content blockquote {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+            margin: 30px 0;
+        }
+        
+        .cta-section {
+            background: var(--bg-light);
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--text-dark);
+            color: #aaa;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .main-footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* --- RWD --- */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="index.html" class="logo">大學備審資料服務中心</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#problem">新制衝擊</a></li>
+                <li><a href="index.html#solution">獨家對策</a></li>
+                <li><a href="index.html#cases">成功案例</a></li>
+                <li><a href="index.html#final-cta" class="cta-button cta-button-secondary">立即報名</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="article-page">
+            <div class="container article-container">
+                
+                <header class="article-header">
+                    <h1>【高三生最終救援】115新制學習歷程SOP救援檢查表</h1>
+                    <p class="subtitle">
+                        檔案上傳在即！你的檔案是「黃金」還是「罐頭」？3分鐘表格自測，看懂教授如何刷掉 3/4 的人！
+                    </p>
+                </header>
+
+                <article class="article-content">
+                    <p>給即將上傳檔案的高三生與家長：</p>
+                    <p><strong>你真的準備好了嗎？</strong></p>
+                    <p>學測成績已成定局，你最後的王牌，只剩下「學習歷程檔案」。但在 115 新制「4倍率篩選」下，你將面對 3/4 的殘酷淘汰率。你的對手，每 4 個人只有 1 個能上榜。</p>
+                    <p>教授如何在 3 分鐘內決定你的命運？就是看你的檔案是「有靈魂的黃金」，還是「Ctrl+C 的罐頭」。</t_p>
+                    <p>「大學備審資料服務中心」緊急釋出這份「SOP救援檢查表」，請立刻拿起你的檔案，一項一項核對。**只要你中了任何一項「致命錯誤」，你都處於落榜高風險區！**</p>
+
+                    <h2>SOP 救援檢查表 (高三生急救版)</h2>
+                    <div class="table-wrapper">
+                        <table class="sop-table">
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>SOP 檢查點</th>
+                                    <th>❌ 致命錯誤 (罐頭範例)</th>
+                                    <th>💡 救援對策 (黃金範例)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>檔案標題</strong></td>
+                                    <td>標題是否在 1 秒內「破題」並「吸睛」？</td>
+                                    <td><span class="icon">❌</span>「高二自主學習.pdf」<br>「生物課報告.pdf」<br>「OO營隊心得」</td>
+                                    <td><span class="icon">💡</span>「(申資工系) Python爬蟲實戰：高中生網路聲量分析.pdf」<br>「(申法律系) 從鄰居漏水案探討民法侵權責任.pdf」</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>心得反思</strong></td>
+                                    <td>是「空洞心得」還是「具體收穫」？</td>
+                                    <td><span class="icon">❌</span>「我學到很多，也學會了團隊合作，活動很有意義。」</td>
+                                    <td><span class="icon">💡</span>「我觀察到『問題A』，嘗試用『方法B』解決，雖失敗但學到『關鍵C』。若重來，我會... (展現反思與解決問題能力)」</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>多元表現</strong></td>
+                                    <td>是「大雜燴」還是「有故事線」？</td>
+                                    <td><span class="icon">❌</span>(申商管系) 放了鋼琴、游泳、書法三張不相關的證書。</td>
+                                    <td><span class="icon">💡</span>(申商管系) 在百字簡述中，將「鋼琴檢定」的「抗壓性」與「籃球隊長」的「領導力」，連結到申請動機。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>成果呈現</strong></td>
+                                    <td>是「只有文字」還是「數據化」？</td>
+                                    <td><span class="icon">❌</span>「我幫社團設計了海報，很多人來看。」</td>
+                                    <td><span class="icon">💡</span>「我設計的海報，為社團活動帶來 200% 的曝光點擊率 (附上後台數據截圖)，並成功吸引 50 位新生報名。」</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <h2>你中了幾項？</h2>
+                    <p>如果你在「致命錯誤」欄中，看到了自己檔案的影子... 恭喜你，你還有最後的救援機會。</p>
+                    <p><strong>高三生，你沒有時間「重做」，但你絕對有時間「重新詮釋」！</strong></p>
+                    <p>你的素材 60 分，但透過專業顧問的「重新詮釋」與「策略包裝」，能呈現出 90 分的價值。這就是上榜與落榜的關鍵！</p>
+
+                    <blockquote>
+                        別讓三年的努力，<br>
+                        敗給一份「懶得修改」的罐頭檔案！
+                    </blockquote>
+                    
+                    <p>「大學備審資料服務中心」專為高三生提供**「學習歷程檔案緊急救援」**服務。我們不是幫你「重做」，而是幫你「點石成金」，把你現有的素材，重新包裝、詮釋、精煉，成為教授眼中的黃金履歷！</p>
+                    
+                </article>
+
+                <section class="cta-section text-center">
+                    <h2>檔案上傳在即，別拿未來當賭注！</h2>
+                    <p>這張SOP只是「急救摘要」，你需要更完整的「50項救援全攻略」！</p>
+                    
+                
+                    
+                    <p style="margin-top: 20px;">時間緊急！立即預約「15分鐘一對一檔案健檢」，我們幫你找出致命傷！</p>
+                    
+                    <a href="https://lin.ee/VSov05V" target="_blank" class="cta-button cta-button-secondary">
+                        報名【高三生最終救援說明會】
+                    </a>
+                </section>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 大學備審資料服務中心. All Rights Reserved.</p>
+            <p>聯繫我們：<a href="https://lin.ee/VSov05V" target="_blank">LINE 官方帳號: @991cpkzh</a> | (07) 365-6039</p>
+        </div>
+    </footer>
+
+</body>
+</html>

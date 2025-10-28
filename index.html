@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>115學測新制衝擊｜滿級分恐落榜！學習歷程才是關鍵 - 大學備審資料服務中心</title>
+    <meta name="description" content="破解115學測4倍率篩選陷阱！別讓高分變白工。大學備審資料服務中心，輔導校排400+錄取台大。立即報名說明會，掌握關鍵入門票。">
+    <meta name="keywords" content="115 學測, 四倍率 篩選, 滿級分 落榜, 學習歷程, 大學備審資料, 升學顧問, 高分低就, 英文五選一">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 基本重置與設定 --- */
+        :root {
+            --primary-color: #0D47A1; /* 專業藍 */
+            --secondary-color: #D32F2F; /* 警示紅 */
+            --accent-color: #FFC107; /* 亮點黃 */
+            --text-dark: #212121;
+            --text-light: #FAFAFA;
+            --bg-light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: #fff;
+        }
+
+        /* --- 通用元件 --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            line-height: 1.3;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        h1 { font-size: 2.5rem; color: var(--secondary-color); }
+        h2 { font-size: 2rem; color: var(--primary-color); }
+        h3 { font-size: 1.5rem; }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .text-center { text-align: center; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* --- CTA 按鈕 --- */
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--text-light);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .cta-button:hover {
+            background: #A02020;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* --- Header / Navigation --- */
+        .main-header {
+            background: #fff;
+            padding: 15px 5%;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none; /* 行動版隱藏 */
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* --- Hero 英雄區 (首屏) --- */
+        .hero {
+            background: linear-gradient(rgba(13, 71, 161, 0.85), rgba(13, 71, 161, 0.85)), url(https://placeholder.com/1200x600?text=Hero+Background) no-repeat center center/cover;
+            color: var(--text-light);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            color: var(--text-light);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero .sub-headline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            color: var(--accent-color);
+        }
+        
+        .hero .cta-button {
+            margin: 10px;
+        }
+
+        /* --- 痛點區 (Problem) --- */
+        #problem {
+            background: var(--bg-light);
+        }
+
+        .problem-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        
+        .problem-card .icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        /* --- 解決方案區 (Solution) --- */
+        .solution-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .solution-image {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .value-prop {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            background: #E3F2FD;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        /* --- 成功案例 (Social Proof) --- */
+        #cases {
+            background: var(--bg-light);
+        }
+        
+        .case-study {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        
+        .case-study img {
+            border-radius: 0;
+        }
+        
+        .case-content {
+            padding: 30px;
+        }
+
+        .case-content h4 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .case-content blockquote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #555;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            margin-top: 15px;
+        }
+
+        /* --- SEO 內容 (Blog Links) --- */
+        .blog-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .blog-post-link {
+            display: block;
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .blog-post-link:hover {
+            background: #E0E0E0;
+            transform: translateX(5px);
+        }
+        
+        .blog-post-link span {
+            color: var(--primary-color);
+            display: block;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* --- 最終 CTA (Final Call to Action) --- */
+        #final-cta {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        #final-cta h2 {
+            color: var(--text-light);
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--text-dark);
+            color: #aaa;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .main-footer p {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .main-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .main-footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* --- RWD 響應式設計 (平板與桌機) --- */
+        
+        @media (min-width: 768px) {
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2.5rem; }
+
+            .nav-links {
+                display: flex;
+            }
+
+            .hero {
+                padding: 100px 0;
+            }
+
+            .problem-grid {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .problem-card {
+                width: 32%;
+            }
+
+            .solution-content {
+                flex-direction: row;
+                gap: 50px;
+            }
+            
+            .solution-text, .solution-image {
+                flex: 1;
+            }
+            
+            .blog-grid {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            
+            .blog-post-link {
+                width: 48%;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .case-study {
+                display: flex;
+                align-items: center;
+            }
+            .case-study img {
+                flex: 0 0 300px; /* 固定寬度 300px */
+                height: 300px;
+                object-fit: cover;
+            }
+            .case-content {
+                flex: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="#" class="logo">大學備審資料服務中心</a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#problem">新制衝擊</a></li>
+                <li><a href="#solution">獨家對策</a></li>
+                <li><a href="#cases">成功案例</a></li>
+                <li><a href="https://forms.gle/GnszEnCj6PsYrevDA" class="cta-button cta-button-secondary">立即報名</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="container">
+                <h1>115學測警報：滿級分也恐落榜！</h1>
+                <p class="sub-headline">傳統高分思維已失靈！4倍率篩選讓競爭白熱化，你的「學習歷程」才是關鍵入門票。</p>
+                <a href="https://forms.gle/GnszEnCj6PsYrevDA" class="cta-button">立即報名【新制破解說明會】</a>
+                <a href="115lzp.html" target="_blank" class="cta-button cta-button-secondary">免費領取【新制懶人包】</a>
+            </div>
+        </section>
+
+        <section id="problem">
+            <div class="container">
+                <h2 class="section-title">三大變革，衝擊你的升學賽道</h2>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="icon">⚠️</div>
+                        <h3>「4倍率」篩選陷阱</h3>
+                        <p>門檻降低讓更多人進入二階，競爭空前慘烈。有 3/4 的人注定陪跑！你的分數優勢正在被弱化。</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="icon">📉</div>
+                        <h3>英文「五選一」</h3>
+                        <p>英文鑑別度大幅提升，猜題機率降低。對考生的真實力要求更高，學測分數更難預測。</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="icon">🤯</div>
+                        <h3>高分低就成常態</h3>
+                        <p>全台每年約 20 名滿級分仍落榜！若不懂新制，單純依賴分數，將錯失理想校系，或高分低就。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution">
+            <div class="container solution-content">
+                <div class="solution-text">
+                    <h2 class="section-title">別讓你的努力，毀在最後一哩路</h2>
+                    <p class="value-prop">「分數，決定你『能不能』申請；<br>歷程，決定你『會不會』錄取。」</p>
+                    <p>我們不是傳統補習班，我們是你的「個人化升學戰略顧問」。在新制下，決勝點全是「學習歷程」與「面試」。</p>
+                    <p>許多家長花大錢補才藝，卻做出教授最不想看的「罐頭履歷」。我們教你掌握核心價值，從「身邊資源」挖掘黃金素材，提早佈局！</p>
+                </div>
+                <div class="solution-image">
+                    <img src="uni01.png" alt="大學備審資料服務中心提供學習歷程策略分析">
+                </div>
+            </div>
+        </section>
+
+        <section id="cases">
+            <div class="container">
+                <h2 class="section-title">真實案例：分數不突出，也能進台大</h2>
+                <div class="case-study">
+                    <img src="ntu01.jpeg" alt="校排400+錄取台大學生案例">
+                    <div class="case-content">
+                        <h3>校排 300+ 王同學 (錄取 國立台灣大學)</h3>
+                        <h4>困境：學測分數不頂尖，校排中後段。</h4>
+                        <p><strong>我們的策略：</strong> 該生喜歡玩手機遊戲，我們輔導他將「遊戲打魔王過關」的經歷，深化為對「邏輯思考、時間管理、遊戲程式設計」的專題實作報告，完整呈現在學習歷程中。</p>
+                        <blockquote>
+                            "我從沒想過每天玩手機的經驗，竟然是教授最想看的！顧問教我把『遊戲經驗』變成『獨家亮點』，這才是上榜關鍵！"
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="seo-content">
+            <div class="container">
+                <h2 class="section-title">升學新知：你必須懂的SOP</h2>
+                <div class="blog-grid">
+                    <a href="115a01.html" class="blog-post-link">
+                        完整解析：115學測『4倍率篩選』如何讓滿級分考生陷入落榜危機？
+                        <span>閱讀更多 &rarr;</span>
+                    </a>
+                    <a href="115a02.html" class="blog-post-link">
+                        教授最討厭的5種「罐頭學習歷程」(內附破解法)
+                        <span>閱讀更多 &rarr;</span>
+                    </a>
+                    <a href="115a03.html" class="blog-post-link">
+                        真實案例：我如何用「幫鄰居寫訴狀」的經歷，錄取法律系？
+                        <span>閱讀更多 &rarr;</span>
+                    </a>
+                    <a href="115a04.html" class="blog-post-link">
+                        提早佈局：從國中開始建立「個人學習檔案」的黃金法則
+                        <span>閱讀更多 &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="final-cta">
+            <div class="container text-center">
+                <h2>還在用舊思維準備 115 學測？</h2>
+                <p style="font-size: 1.3rem; margin-bottom: 30px;">別讓孩子成為新制的犧牲品！立即行動，搶佔錄取先機！</p>
+                <a href="https://forms.gle/GnszEnCj6PsYrevDA" target="_blank" class="cta-button">立即報名【115 學測新制破解說明會】</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 大學備審資料服務中心. All Rights Reserved.</p>
+            <p>聯繫我們：<a href="https://lin.ee/VSov05V" target="_blank">LINE 官方帳號: @991cpkzh</a> | (07) 365-6039</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
