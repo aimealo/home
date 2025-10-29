@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學測落點分析 PWD</title>
+    
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --light-gray: #f4f4f4;
+            --medium-gray: #ddd;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --border-radius: 10px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 20px;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .prompt-block {
+            padding: 24px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .prompt-block:last-child {
+            border-bottom: none;
+        }
+
+        .prompt-block h2 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 8px;
+        }
+
+        .prompt-block p.description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* 方框 1: 成績輸入 */
+        .grade-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+        }
+
+        .grade-grid label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .grade-grid select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            background-color: var(--white);
+        }
+
+        /* 方框 2: 類組選擇 */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .category-grid label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: var(--light-gray);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .category-grid label:hover {
+            background-color: #e9e9e9;
+        }
+
+        .category-grid input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        /* 方框 3: 大學選擇 */
+        .filter-buttons, .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .filter-buttons button, .tab-buttons button {
+            padding: 8px 14px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            transition: all 0.2s;
+        }
+
+        .filter-buttons button:hover {
+            background-color: #ccc;
+        }
+        
+        .filter-buttons button.clear {
+            background-color: #e74c3c;
+            color: var(--white);
+        }
+
+        .tab-buttons button {
+            flex-grow: 1;
+            border-radius: 6px;
+        }
+        
+        .tab-buttons button.active {
+            background-color: var(--primary-color);
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        #uni-list-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            padding: 12px;
+            background-color: #fafafa;
+        }
+        
+        .uni-region-content {
+            display: none; /* JS 會控制顯示 */
+            columns: 2;
+            column-gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .uni-region-content {
+                columns: 1;
+            }
+        }
+
+        .uni-region-content.active {
+            display: block;
+        }
+
+        .uni-list-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            break-inside: avoid-column;
+        }
+
+        .uni-list-item input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        /* 方框 4: 生成提示詞 */
+        .generation-controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        #generate-btn {
+            flex-grow: 2;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: #28a745;
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #generate-btn:hover {
+            background-color: #218838;
+        }
+
+        #copy-btn {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 1.1rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #copy-btn:hover {
+            background-color: #004494;
+        }
+
+        #output-prompt {
+            width: 100%;
+            height: 200px;
+            box-sizing: border-box; /* 確保 padding 不會影響寬度 */
+            padding: 12px;
+            font-size: 1rem;
+            line-height: 1.5;
+            border: 1px solid var(--medium-gray);
+            border-radius: 6px;
+            background-color: var(--light-gray);
+            color: #333;
+            resize: vertical;
+        }
+
+        /* ===== 這是新增的樣式 (方框5) ===== */
+        .navigation-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .navigation-controls a {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none; /* 移除超連結底線 */
+            text-align: center;
+        }
+
+        #home-btn {
+            background-color: var(--primary-color); /* 藍色 */
+        }
+        #home-btn:hover {
+            background-color: #004494;
+        }
+
+        #gemini-btn {
+            background-color: #28a745; /* 綠色 */
+        }
+        #gemini-btn:hover {
+            background-color: #218838;
+        }
+        /* ===== 新增樣式結束 ===== */
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="header">
+            <h1>大學備審資料服務中心</h1>
+            <p style="margin: 4px 0 0 0; opacity: 0.9;">學測落點分析 Ai 提示詞生成器</p>
+        </header>
+
+        <section class="prompt-block">
+            <h2>1. 輸入你的學測成績</h2>
+            <p class="description">請選擇你的各科級分。若未報考該科，請保留「- 未選考 -」。</p>
+            <div class="grade-grid">
+                <div>
+                    <label for="grade-chinese">國文</label>
+                    <select id="grade-chinese"></select>
+                </div>
+                <div>
+                    <label for="grade-english">英文</label>
+                    <select id="grade-english"></select>
+                </div>
+                <div>
+                    <label for="grade-shu-a">數A</label>
+                    <select id="grade-shu-a"></select>
+                </div>
+                <div>
+                    <label for="grade-shu-b">數B</label>
+                    <select id="grade-shu-b"></select>
+                </div>
+                <div>
+                    <label for="grade-natural">自然</label>
+                    <select id="grade-natural"></select>
+                </div>
+                <div>
+                    <label for="grade-social">社會</label>
+                    <select id="grade-social"></select>
+                </div>
+            </div>
+        </section>
+
+        <section class="prompt-block">
+            <h2>2. 選擇你的目標類組 (可複選)</h2>
+            <p class="description">這將有助於 AI 顧問優先篩選你感興趣的學群。</p>
+            <div class="category-grid">
+                <label>
+                    <input type="checkbox" name="category" value="第一類組 (文法商)">
+                    第一類組 (文法商、社會)
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="第二類組 (理工)">
+                    第二類組 (理工、資訊)
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="第三類組 (醫農)">
+                    第三類組 (醫藥、生命科學)
+                </label>
+                <label>
+                    <input type="checkbox" name="category" value="第四類組 (其他)">
+                    第四類組 (農學、藝術、其他)
+                </label>
+            </div>
+        </section>
+
+        <section class="prompt-block">
+            <h2>3. 選擇目標學校 (可複選)</h2>
+            <p class="description">可使用快速篩選，或手動勾選你想查詢的學校。</p>
+            
+            <div class="filter-buttons">
+                <button id="filter-national">全部國立</button>
+                <button id="filter-private">全部私立</button>
+                <button id="filter-top">頂大(台清交成政)</button>
+                <button id="filter-zhongzibei">中字輩</button>
+                <button id="filter-clear" class="clear">清除全部</button>
+            </div>
+
+            <div class="tab-buttons">
+                <button id="tab-north" class="active" data-region="north">北部</button>
+                <button id="tab-central" data-region="central">中部</button>
+                <button id="tab-south" data-region="south">南部</button>
+                <button id="tab-east" data-region="east">東部/離島</button>
+            </div>
+
+            <div id="uni-list-container">
+                <div id="region-content-north" class="uni-region-content active"></div>
+                <div id="region-content-central" class="uni-region-content"></div>
+                <div id="region-content-south" class="uni-region-content"></div>
+                <div id="region-content-east" class="uni-region-content"></div>
+            </div>
+        </section>
+
+        <section class="prompt-block">
+            <h2>4. 產生你的客製化提問</h2>
+            <p class="description">點擊下方按鈕，將自動彙整你的資料，並產生可複製的提問，使用 Gemini Ai 查詢。</p>
+            
+            <div class="generation-controls">
+                <button id="generate-btn">🚀 點此生成 AI 提示詞</button>
+                <button id="copy-btn">📋 一鍵複製提示詞</button>
+            </div>
+
+            <textarea id="output-prompt" readonly placeholder="點擊 [生成] 按鈕後，你的專屬提問將會出現在這裡..."></textarea>
+        </section>
+
+        <section class="prompt-block">
+            <h2>複製成功，前往下一步</h2>
+            <p class="description">使用你產生的提示詞，前往 Gemini Ai。</p>
+            <div class="navigation-controls">
+                <a href="index.html" id="home-btn">🏠 回主頁</a>
+                <a href="https://gemini.google.com/" target="_blank" id="gemini-btn">🚀 前往 Gemini Ai</a>
+            </div>
+        </section>
+        </div>
+
+    <script>
+        // 頁面載入完成後執行
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- 資料庫 ---
+
+            // 1. 全台大學資料 (包含地區、類型)
+            // 類型 key: 'national' (國立), 'private' (私立), 'top' (頂大), 'zhongzibei' (中字輩)
+            const universityData = [
+                // 北部
+                { name: "國立臺灣大學", region: "north", type: "national top" },
+                { name: "國立清華大學", region: "north", type: "national top" },
+                { name: "國立陽明交通大學", region: "north", type: "national top" },
+                { name: "國立政治大學", region: "north", type: "national top" },
+                { name: "國立臺灣師範大學", region: "north", type: "national" },
+                { name: "國立臺北大學", region: "north", type: "national" },
+                { name: "國立中央大學", region: "north", type: "national zhongzibei" },
+                { name: "國立臺灣海洋大學", region: "north", type: "national" },
+                { name: "輔仁大學", region: "north", type: "private" },
+                { name: "東吳大學", region: "north", type: "private" },
+                { name: "淡江大學", region: "north", type: "private" },
+                { name: "中原大學", region: "north", type: "private" },
+                { name: "元智大學", region: "north", type: "private" },
+                { name: "長庚大學", region: "north", type: "private" },
+                { name: "臺北醫學大學", region: "north", type: "private" },
+                // 中部
+                { name: "國立中興大學", region: "central", type: "national zhongzibei" },
+                { name: "國立暨南國際大學", region: "central", type: "national" },
+                { name: "國立彰化師範大學", region: "central", type: "national" },
+                { name: "國立臺中教育大學", region: "central", type: "national" },
+                { name: "東海大學", region: "central", type: "private" },
+                { name: "逢甲大學", region: "central", type: "private" },
+                { name: "靜宜大學", region: "central", type: "private" },
+                { name: "亞洲大學", region: "central", type: "private" },
+                { name: "中國醫藥大學", region: "central", type: "private" },
+                // 南部
+                { name: "國立成功大學", region: "south", type: "national top" },
+                { name: "國立中山大學", region: "south", type: "national zhongzibei" },
+                { name: "國立中正大學", region: "south", type: "national zhongzibei" },
+                { name: "國立高雄師範大學", region: "south", type: "national" },
+                { name: "國立嘉義大學", region: "south", type: "national" },
+                { name: "國立臺南大學", region: "south", type: "national" },
+                { name: "國立高雄大學", region: "south", type: "national" },
+                { name: "高雄醫學大學", region: "south", type: "private" },
+                { name: "義守大學", region: "south", type: "private" },
+                // 東部/離島
+                { name: "國立東華大學", region: "east", type: "national" },
+                { name: "國立宜蘭大學", region: "east", type: "national" },
+                { name: "國立臺東大學", region: "east", type: "national" },
+                { name: "國立金門大學", region: "east", type: "national" },
+                { name: "慈濟大學", region: "east", type: "private" }
+            ];
+
+            // --- 初始化函式 ---
+
+            // 1. 初始化成績下拉選單
+            function populateGradeSelects() {
+                const subjects = ['grade-chinese', 'grade-english', 'grade-shu-a', 'grade-shu-b', 'grade-natural', 'grade-social'];
+                
+                subjects.forEach(id => {
+                    const select = document.getElementById(id);
+                    // 預設選項
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = "未選考";
+                    defaultOption.textContent = "- 未選考 -";
+                    select.appendChild(defaultOption);
+                    
+                    // 15 到 1 級分
+                    for (let i = 15; i >= 1; i--) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = i;
+                        select.appendChild(option);
+                    }
+                });
+            }
+
+            // 2. 初始化大學列表
+            function populateUniversities() {
+                const containers = {
+                    north: document.getElementById('region-content-north'),
+                    central: document.getElementById('region-content-central'),
+                    south: document.getElementById('region-content-south'),
+                    east: document.getElementById('region-content-east')
+                };
+
+                universityData.forEach(uni => {
+                    const container = containers[uni.region];
+                    if (container) {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'uni-list-item';
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = `uni-${uni.name}`;
+                        checkbox.className = 'uni-checkbox';
+                        checkbox.setAttribute('data-name', uni.name);
+                        checkbox.setAttribute('data-type', uni.type);
+
+                        const label = document.createElement('label');
+                        label.htmlFor = `uni-${uni.name}`;
+                        label.textContent = uni.name;
+                        
+                        itemDiv.appendChild(checkbox);
+                        itemDiv.appendChild(label);
+                        container.appendChild(itemDiv);
+                    }
+                });
+            }
+
+            // --- 功能函式 ---
+
+            // 1. 顯示/隱藏大學地區
+            function showRegion(regionName) {
+                // 隱藏所有內容
+                document.querySelectorAll('.uni-region-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                // 移除所有頁籤的 active 狀態
+                document.querySelectorAll('.tab-buttons button').forEach(button => {
+                    button.classList.remove('active');
+                });
+
+                // 顯示指定的內容
+                document.getElementById(`region-content-${regionName}`).classList.add('active');
+                // 標記指定的頁籤
+                document.getElementById(`tab-${regionName}`).classList.add('active');
+            }
+
+            // 2. 應用快速篩選
+            function applyFilter(filterType) {
+                const allCheckboxes = document.querySelectorAll('.uni-checkbox');
+                
+                allCheckboxes.forEach(cb => {
+                    if (filterType === 'clear') {
+                        cb.checked = false;
+                    } else {
+                        const uniType = cb.getAttribute('data-type');
+                        if (uniType.includes(filterType)) {
+                            cb.checked = true;
+                        }
+                    }
+                });
+            }
+
+            // 3. 生成提示詞
+            function generatePrompt() {
+                // (1) 獲取成績
+                const grades = {
+                    chinese: document.getElementById('grade-chinese').value,
+                    english: document.getElementById('grade-english').value,
+                    shuA: document.getElementById('grade-shu-a').value,
+                    shuB: document.getElementById('grade-shu-b').value,
+                    natural: document.getElementById('grade-natural').value,
+                    social: document.getElementById('grade-social').value
+                };
+                const gradeString = `國文=${grades.chinese}, 英文=${grades.english}, 數A=${grades.shuA}, 數B=${grades.shuB}, 自然=${grades.natural}, 社會=${grades.social}`;
+
+                // (2) 獲取類組
+                const selectedCategories = [];
+                document.querySelectorAll('input[name="category"]:checked').forEach(cb => {
+                    selectedCategories.push(cb.value);
+                });
+                const categoryString = selectedCategories.length > 0 ? selectedCategories.join(', ') : "未指定";
+
+                // (3) 獲取大學
+                const selectedUniversities = [];
+                document.querySelectorAll('.uni-checkbox:checked').forEach(cb => {
+                    selectedUniversities.push(cb.getAttribute('data-name'));
+                });
+                const uniString = selectedUniversities.length > 0 ? selectedUniversities.join(', ') : "未指定大學";
+
+                // (4) 組合提示詞
+                const prompt = `你是大學申請顧問，以學測模擬考成績結果：${gradeString}
+請綜合以上類組選擇 (${categoryString}) 與學測成績，進行查詢114年 ${uniString} 的學測篩選標準，
+比較分析有機會通過篩選的科系中，找出排序最前面、最熱門的（最多20個）科系，依序列出學校科系清單，並製成文字說明欄與列表。`;
+
+                // (5) 顯示在 Textarea
+                document.getElementById('output-prompt').value = prompt;
+            }
+
+            // 4. 複製提示詞
+            function copyPrompt() {
+                const outputArea = document.getElementById('output-prompt');
+                const textToCopy = outputArea.value;
+
+                if (!textToCopy) {
+                    alert("請先生成提示詞！");
+                    return;
+                }
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // 成功反饋
+                    const copyBtn = document.getElementById('copy-btn');
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = "✅ 已複製！";
+                    copyBtn.style.backgroundColor = "#28a745"; // 暫時變綠色
+                    
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.style.backgroundColor = "var(--primary-color)"; // 恢復原色
+                    }, 2000);
+
+                }).catch(err => {
+                    console.error('複製失敗: ', err);
+                    alert("複製失敗，請手動複製。");
+                });
+            }
+
+            // --- 綁定事件監聽 ---
+
+            // 初始化
+            populateGradeSelects();
+            populateUniversities();
+
+            // 綁定地區頁籤按鈕
+            document.querySelectorAll('.tab-buttons button').forEach(button => {
+                button.addEventListener('click', function() {
+                    showRegion(this.getAttribute('data-region'));
+                });
+            });
+
+            // 綁定快速篩選按鈕
+            document.getElementById('filter-national').addEventListener('click', () => applyFilter('national'));
+            document.getElementById('filter-private').addEventListener('click', () => applyFilter('private'));
+            document.getElementById('filter-top').addEventListener('click', () => applyFilter('top'));
+            document.getElementById('filter-zhongzibei').addEventListener('click', () => applyFilter('zhongzibei'));
+            document.getElementById('filter-clear').addEventListener('click', () => applyFilter('clear'));
+
+            // 綁定生成和複製按鈕
+            document.getElementById('generate-btn').addEventListener('click', generatePrompt);
+            document.getElementById('copy-btn').addEventListener('click', copyPrompt);
+
+        });
+    </script>
+    <center>
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 大學備審資料服務中心. All Rights Reserved.</p>
+            <p>聯繫我們：<a href="https://lin.ee/VSov05V" target="_blank">LINE 官方帳號: @991cpkzh</a> | (07) 365-6039</p>
+        </div>
+    </footer>
+    </center>
+</body>
+</html>
