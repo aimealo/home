@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高賀學習歷程菁英班 學員 DISC 測驗</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Theme color for PWA -->
+    <meta name="theme-color" content="#ffffff">
+    <!-- iOS PWA support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DISC 測驗">
+    <!-- Icon for PWA -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .info-container, .quiz-container {
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .question {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .question h3 {
+            margin-top: 0;
+            color: #4a5568;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .options label:hover {
+            background: #f0f0f0;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #5a67d8;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result-container {
+            display: none;
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .student-info {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #f2f2f2;
+        }
+        .personality {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .personality h2 {
+            color: #2d7d32;
+            display: flex;
+            align-items: center;
+        }
+        .animal-icon {
+            font-size: 32px;
+            margin-right: 10px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .info-container, .quiz-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>高賀學習歷程菁英班 學員 DISC 測驗</h1>
+        <p>從以下各題選項中選出與你最接近的答案，不用花太多時間思考，按感覺選出即可。</p>
+    </header>
+
+    <div class="info-container" id="infoForm">
+        <h2>學員資料</h2>
+        <div class="form-group">
+            <label for="studentName">姓名</label>
+            <input type="text" id="studentName" placeholder="請輸入您的姓名">
+        </div>
+        <div class="form-group">
+            <label for="studentId">學號</label>
+            <input type="text" id="studentId" placeholder="請輸入您的學號">
+        </div>
+        <button type="button" onclick="startQuiz()">開始測驗</button>
+    </div>
+
+    <div class="quiz-container" id="quiz" style="display:none;">
+        <form id="quizForm">
+            <!-- Questions will be dynamically inserted here -->
+        </form>
+        <button type="button" onclick="submitQuiz()" id="submitBtn" disabled>完成測驗</button>
+    </div>
+
+    <div class="result-container" id="result">
+        <h2>測驗結果</h2>
+        
+        <div class="student-info">
+            <h3>學員資訊</h3>
+            <p><strong>姓名：</strong><span id="resultName"></span></p>
+            <p><strong>學號：</strong><span id="resultId"></span></p>
+        </div>
+        
+        <h3>答案統計</h3>
+        <table id="statsTable">
+            <thead>
+                <tr>
+                    <th>類型</th>
+                    <th>動物代表</th>
+                    <th>選擇數量</th>
+                    <th>百分比</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>支配型 (D)</td>
+                    <td>🐯 老虎</td>
+                    <td id="count1">0</td>
+                    <td id="percent1">0%</td>
+                </tr>
+                <tr>
+                    <td>影響型 (I)</td>
+                    <td>🦚 孔雀</td>
+                    <td id="count2">0</td>
+                    <td id="percent2">0%</td>
+                </tr>
+                <tr>
+                    <td>安定型 (S)</td>
+                    <td>🐨 無尾熊</td>
+                    <td id="count3">0</td>
+                    <td id="percent3">0%</td>
+                </tr>
+                <tr>
+                    <td>分析型 (C)</td>
+                    <td>🦉 貓頭鷹</td>
+                    <td id="count4">0</td>
+                    <td id="percent4">0%</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div id="personality" class="personality"></div>
+        <button onclick="resetQuiz()">重新測驗</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 高賀學習歷程菁英班 DISC 測驗</p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                q: "1 當你和朋友一起用餐時，在選擇用餐或是吃什麼時，你常是：",
+                options: [
+                    "(1)決定者：意見不同時，通常都是決定者。",
+                    "(2)氣氛製造者：吃什麼，很能帶動情緒氣氛。",
+                    "(3)附和者：隨便，沒意見。",
+                    "(4)意見提供者：常去否定別人的提議，自己卻又沒意見，也不做任何決定。"
+                ]
+            },
+            {
+                q: "2 當你買衣服時，你是：",
+                options: [
+                    "(1)不易受售貨員影響，「心中自有定見」。",
+                    "(2)售貨員的親切及好的感受，常會促進你的購買。",
+                    "(3)找熟悉的店購買。",
+                    "(4)品質與價錢是否成比例，價錢是否合理?"
+                ]
+            },
+            {
+                q: "3 你的消費習慣是：",
+                options: [
+                    "(1)找到要買的東西，付錢走人。",
+                    "(2)很隨意的逛，不特定買什麼。",
+                    "(3)有一定的消費習慣，不太喜歡變化。",
+                    "(4)較注意東西好不好，較有成本觀念。"
+                ]
+            },
+            {
+                q: "4 你的朋友，以一句話來形容你，他們會說：",
+                options: [
+                    "(1)蠻「鴨霸」的。",
+                    "(2)熱情洋溢。",
+                    "(3)溫和斯文。",
+                    "(4)要求完美。"
+                ]
+            },
+            {
+                q: "5 你自認那一種形容，最能表現你的特色：",
+                options: [
+                    "(1)果敢的，能接受挑戰。",
+                    "(2)生動活潑，不拘小節。",
+                    "(3)愛傾聽，喜歡穩定。",
+                    "(4)處世謹慎小心，重數據分析。"
+                ]
+            },
+            {
+                q: "6 你覺得做事的重點，應該是：",
+                options: [
+                    "(1)what，做什麼? 重結果。",
+                    "(2)who，誰來做? 重感受(過程)",
+                    "(3)why，為何做? 重品質。",
+                    "(4)how，怎麼做? 重執行。"
+                ]
+            },
+            {
+                q: "7 與同學有意見衝突(或不同)時，你是：",
+                options: [
+                    "(1)說服對方，聽從自己的意見。",
+                    "(2)問其他同學或長輩之意見，尋求支持。",
+                    "(3)退讓，以和為貴。",
+                    "(4)與衝突者協調，找尋最好的意見。"
+                ]
+            },
+            {
+                q: "8 什麼樣的教室環境，最能鼓舞你：",
+                options: [
+                    "(1)班會能讓你決定事情，具班長地位的。",
+                    "(2)同學間相處愉快，處處受歡迎。",
+                    "(3)教室環境整潔可安靜學習。",
+                    "(4)講紀律的班級幹部。"
+                ]
+            },
+            {
+                q: "9 以下的溝通方式，那一項最符合你：",
+                options: [
+                    "(1)直接了當，較權威式的。",
+                    "(2)表情豐富，肢體語言較多。",
+                    "(3)先聽聽別人意見，而後溫和的表達自己的意見。",
+                    "(4)不露感情的，理多於情，愛分析，較冷靜。"
+                ]
+            },
+            {
+                q: "10 在每一次班會中或社團決議提案時，你所扮演的角色為何：",
+                options: [
+                    "(1)據理力爭者。",
+                    "(2)協調者。",
+                    "(3)贊同多數者。",
+                    "(4)分析所有提案以供參考者。"
+                ]
+            },
+            {
+                q: "11",
+                options: [
+                    "(1)我做事一向以具體，短期能達到目標；決定快速，立即得到結果。",
+                    "(2)在本性上，我喜歡跟人交往，各式各樣的人都行，甚至陌生人也行。",
+                    "(3)我不喜歡強出頭，寧可當後補。",
+                    "(4)我是一個自我約束，很守紀律的人，凡事依既定目標行事。"
+                ]
+            },
+            {
+                q: "12",
+                options: [
+                    "(1)我喜歡有變化，激烈且競爭的環境，是個可接受挑戰的人。",
+                    "(2)我喜歡社交，也喜歡招待人。",
+                    "(3)我喜歡成為小組的一份子，固守一般性程序。",
+                    "(4)我會花很多時間去研究事與人。"
+                ]
+            },
+            {
+                q: "13",
+                options: [
+                    "(1)我喜歡按自己的方法做事，不在乎別人對我的觀感，只要成功。",
+                    "(2)有人跟我意見不一致時，我會很難過(困擾)。",
+                    "(3)我知道做些改變是有必要的，但即使如此我還是覺得少冒險來的好。",
+                    "(4)我對自己及他人的期望很高，這些都是為符合我的高標準。"
+                ]
+            },
+            {
+                q: "14",
+                options: [
+                    "(1)我擅長於處理棘手的問題。",
+                    "(2)我是個很熱心的人，我喜歡跟別人一起工作。",
+                    "(3)我喜歡聽而不喜歡說話，我一開口都說得很委婉溫和。",
+                    "(4)處理事我較不動感情，是就是，不把感情牽扯進來，也較少與人閒聊。"
+                ]
+            },
+            {
+                q: "15",
+                options: [
+                    "(1)我喜歡有競爭，有競爭才能把潛能完全發揮出來。",
+                    "(2)我較感性，與人相處或處事較不注意細節。",
+                    "(3)我是個理性的組員，順著群眾，具有高度的團體意識。",
+                    "(4)對事我喜歡去研究，講求證據與保證。"
+                ]
+            },
+            {
+                q: "16",
+                options: [
+                    "(1)我喜歡能力與權威，這是我想要的。",
+                    "(2)我有時情緒化，一旦生氣常氣過頭。有時置身於有趣事務中，往往無法掌握時間。",
+                    "(3)我喜歡按部就班，穩紮穩打，慢慢地做事，而不喜歡破斧沈舟般的方式。",
+                    "(4)我很注意事務與人的細節。"
+                ]
+            },
+            {
+                q: "17",
+                options: [
+                    "(1)對直接關係的環境，我有喜歡去掌握及支配他人的傾向。",
+                    "(2)在團體中我喜歡打成一片，活活潑潑有氣氛，有感情的相處。",
+                    "(3)我較遵守傳統的步驟做事，不喜歡有很大的變化。",
+                    "(4)在沒有掌握事實的真象與更多資料之前，我寧可保持現狀。"
+                ]
+            },
+            {
+                q: "18",
+                options: [
+                    "(1)我在與人溝通時，直接了當的說，不喜歡兜圈子。",
+                    "(2)我喜歡幫助人，相親相愛。",
+                    "(3)我不喜歡多變化的環境，而要穩定安全的生活方式。",
+                    "(4)凡事我要求的是準確無誤，講求的是高品質，高標準的處事原則。"
+                ]
+            },
+            {
+                q: "19",
+                options: [
+                    "(1)我不喜歡別人逗我開心，不喜歡太多話的人。",
+                    "(2)我喜歡參加團體活動，因為與很多人在一起感覺很好。",
+                    "(3)對事情我沒有太多要求與意見，喜歡靜靜的有耐心的做。",
+                    "(4)我做事要有一套經過計劃設計的標準作業程序，來引導作業方向。"
+                ]
+            },
+            {
+                q: "20",
+                options: [
+                    "(1)我討厭別人告訴我事情該如何做，因我自有定見，我不喜歡被別人支配。",
+                    "(2)我是個生氣勃勃外向的人，別人愛跟我一起工作，因為別人與我一起工作，就會激起他們的熱心，我就是有那能耐。",
+                    "(3)我喜歡獨處，若與人生活在一起，會注意儘量不去打擾他人的居家生活。",
+                    "(4)我很少加入別人的閒聊中，當話題有趣時，我會找資料並加入閒聊中。"
+                ]
+            }
+        ];
+
+        let answers = new Array(questions.length).fill(null);
+        let studentName = '';
+        let studentId = '';
+
+        function startQuiz() {
+            studentName = document.getElementById('studentName').value.trim();
+            studentId = document.getElementById('studentId').value.trim();
+            
+            if (!studentName || !studentId) {
+                alert('請填寫姓名和學號');
+                return;
+            }
+            
+            document.getElementById('infoForm').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+        }
+
+        function loadQuiz() {
+            const form = document.getElementById('quizForm');
+            questions.forEach((question, index) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `<h3>${question.q}</h3>`;
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                question.options.forEach((option, optIndex) => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `q${index}`;
+                    input.value = optIndex + 1;
+                    input.onchange = () => {
+                        answers[index] = parseInt(input.value);
+                        updateSubmitButton();
+                    };
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option));
+                    optionsDiv.appendChild(label);
+                });
+                div.appendChild(optionsDiv);
+                form.appendChild(div);
+            });
+        }
+
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            const completed = answers.every(answer => answer !== null);
+            submitBtn.disabled = !completed;
+        }
+
+        function submitQuiz() {
+            if (answers.every(answer => answer !== null)) {
+                localStorage.setItem('discAnswers', JSON.stringify(answers));
+                localStorage.setItem('studentName', studentName);
+                localStorage.setItem('studentId', studentId);
+                showResult();
+            }
+        }
+
+        function showResult() {
+            // Load from localStorage if available
+            const savedAnswers = localStorage.getItem('discAnswers');
+            const savedName = localStorage.getItem('studentName');
+            const savedId = localStorage.getItem('studentId');
+            
+            if (savedAnswers) {
+                answers = JSON.parse(savedAnswers);
+            }
+            if (savedName) {
+                studentName = savedName;
+            }
+            if (savedId) {
+                studentId = savedId;
+            }
+
+            // Display student info
+            document.getElementById('resultName').textContent = studentName;
+            document.getElementById('resultId').textContent = studentId;
+
+            const counts = [0, 0, 0, 0];
+            answers.forEach(answer => {
+                counts[answer - 1]++;
+            });
+
+            // Calculate percentages
+            const total = answers.length;
+            const percentages = counts.map(count => Math.round((count / total) * 100));
+
+            document.getElementById('count1').textContent = counts[0];
+            document.getElementById('count2').textContent = counts[1];
+            document.getElementById('count3').textContent = counts[2];
+            document.getElementById('count4').textContent = counts[3];
+            
+            document.getElementById('percent1').textContent = `${percentages[0]}%`;
+            document.getElementById('percent2').textContent = `${percentages[1]}%`;
+            document.getElementById('percent3').textContent = `${percentages[2]}%`;
+            document.getElementById('percent4').textContent = `${percentages[3]}%`;
+
+            const maxCount = Math.max(...counts);
+            const maxIndices = counts.map((count, index) => count === maxCount ? index + 1 : null).filter(Boolean);
+            let personality = '';
+            let description = '';
+            let animalIcon = '';
+
+            if (maxIndices.length > 1 && Math.min(...counts.filter((_, i) => maxIndices.includes(i+1))) >= maxCount - 1) {
+                // Chameleon type
+                personality = '變色龍型 🦎';
+                animalIcon = '🦎';
+                description = '如果 10 題的答案中選 1.2.3.4 的答案最多與最低的不超過 1，代表 D.I.S.C 的特質均有，此類型叫做變色龍型 : 屬全方位人物，既沒有凸出的個性，對事也沒有甚麼強烈的個人意識型態，事事求中立並傾向站在沒有立場的位置，故在衝突的環境中，是個能遊走於折衝間的高手。由於他們能密切地融合於各種環境中，他們可以為企業進行對內對外的各種交涉，只要任務確實和目標清楚，他們都能恰如其分完成其任務，以善變為其專長。';
+            } else {
+                const dominant = maxIndices[0];
+                if (dominant === 1) {
+                    personality = '老虎—實際(支配)型性格 🐯';
+                    animalIcon = '🐯';
+                    description = '(1).選 1 的答案最多 代表老虎—實際(支配)型性格較為突出 : 獅子本來就比較稀少、代表了實踐力、果斷力、支配、管理、目標導向、熱愛壓力及挑戰，適合做企業家及管理階層。<br> (以事為導向) ，代表人物 : 希特勒、孫悟空、拿破崙、郭台銘。 <br> 說明： 支配度高者有自己的想法，且非常想成功，同時極擅於讓別人依他們的方法做事，具有支配能量高的人會做全盤考量，並看情況是否有利，為滿足自己的需要，他們會透過直接且壓迫性的行為掌控環境，但現況不利時，他們通常能壓住反對的聲音。 工作時： 支配度高者很像生意人。他們的工作環境忙碌、正式、有效率、有組織且功能性高。果斷、反應快的人擅言詞，同時尖銳而不圓融，因為他們以事為主，並要求結果。高自我意識的長處，使這類人經常成為組織的火車頭，因為他們好勝、喜歡改變且討厭現況。身為愛探險的行動派，這類人要的是直接答案，且喜歡馬上看到結果。他們沒什麼耐心，這可以從扣桌子、搖椅子和坐立不安等行為看出。若你有機會和這類人說話，可以考慮調整一下表達方式，談談他們想聽的「產能」、「功能」、「期限」和「成本」等。 <br> 適合學群 : 管理、教育、法政、藝術、醫藥衛生、社會與心理。 <br> 適合職務 : 業務經理、企業家、將軍、創業者、海外事業、指揮、導演、警察。';
+                } else if (dominant === 2) {
+                    personality = '孔雀—社交(影響)型性格 🦚';
+                    animalIcon = '🦚';
+                    description = '(2).選 2 的答案最多 代表孔雀—社交(影響)型性格較為突出 : 孔雀愛表現、專注於人際互動、善於運用群眾魅力、富創意，因此很適合從事廣告、企劃、公關等需要到處 social 協調的工作。<br>(以人為導向)，代表人物 : 柯林頓、貓王、吳宗憲。 <br>說明： I 高級的溝通能力強，並對自己的社交能力很有自信。為了滿足需要，具有高影響能量者會先結合他人，說服其進行合作，以團隊方式完成預期目標。I 型生性較樂觀，會將大多數狀況視為有利條件，有別於 D 型的敏感行為，由於他們急於認識他人並獲其欣賞，因此這類人的行為，有時是不善社交者很難理解的。他們通常有能力說服他人共同合作。他們的自我意識很強，與 D 型一樣口才極佳，但 I 型高者較圓滑，對他人的感覺較敏感。他們非常外向，且以人為主，同時珍惜關係。他們喜歡人際接觸頻繁的環境，因為他們在任何時候都可以交朋友。影響型喜歡招待他人，懂得享受美食與餐廳氣氛。這類人追求時髦，喜愛行動自由與物質享受。他們的工作環境友善、個人化且可激發創意。（還有雜亂無章！） 工作時： 影響度高者的步調快速又即興，除非他們想獲得他人的賞識，否則一般而言他們會忽略細節，且雜亂無章。這類人會迅速把所有的東西塞進抽屜，為什麼？沒錯，為了看來更「體面」。周遭居住或工作的人，幾乎不可能從他們的桌子或檔案.找到任何東西， 可是，他們就是知道東西「就在這兒附近」。影響度高者天生對人性樂觀，而濫用此 特質的缺點之一，就是對誰都信賴，且聽他人說話，會選擇性的聽與自己想聽的東西， 或者自己樂觀希望發生的部份。他們可能要吃了幾次教訓才學乖，孔雀型族人在任何團體內，都是人緣最好的人和最受歡迎的人，是個最能吹起領導號角的人物。當孔雀型人的部屬者，除要能樂在團隊工作中外，還要對其領導謙遜得體，不露鋒、 不出頭，把一切成功光華都讓與領導。 <br> 適合學群 : 大眾傳播、遊憩與運動、社會與心理、藝術、外語、生命科學。 <br> 適合職務 : 演員、領隊、講師、表演藝術者、業務、主持人、廣告創意、政客 。';
+                } else if (dominant === 3) {
+                    personality = '無尾熊—親切(安定)型性格 🐨';
+                    animalIcon = '🐨';
+                    description = '(3).選 3 的答案最多 代表無尾熊—親切(安定)型性格較為突出 : 無尾熊喜愛安定、不安於改變，但也因此有最佳的持續能力，就算是事情有重大變化也會堅守崗位到最後一刻，另外無尾熊是最有耐心且善於傾聽，做慈善事業是最好的。<br>代表人物 : 證嚴法師、甘地、阿信。 <br>說明： 穩健度處於曲線頂端的人，對大多數組織而言是「純金」，因為他們不僅是忠誠的員工，也是可信賴的團隊成員。他們是按部就班的邏輯思考者，喜歡為一個領袖或目標奮鬥。穩健型偏愛穩定且可預測的環境，而需要改變時，他們會希望事先被告知。他們熱愛長期的工作關係，以服務為導向，同時有耐心且和善，是一個能設身處地且富同情心的聆聽者，他們真正關心他人的感覺和問題，在專案中尤其能扮演幕僚的角色。穩健度高者很謙虛，且在大部份情況下，剛開始時都不直接。（然而，若他們認為自己全盤瞭解狀況，並已下定決心，頑強固執的個性就會出現！）如果你不同意他們的想法，並想加以說服，最好帶著如山鐵證。要他們改變之前，先給他們重新思考的時間和空間。 工作時： 穩健型偏好休閒協調的穿著。他們的工作環境個人化、輕鬆、友好且非正式。他們喜歡一致、緩慢且簡單的方法，同時具備長期的專注力，使他們能穩健的執行工作。若某個穩健者的第二高分是支配度，他們可能會完全以目標為導向，而且不害怕直話直說。若第二高分是服從度，他們可能會不斷的問：「你怎麼知道這是正確的方法？」他們在冒險之前，會希望能得知所有相關證據。<br> 適合學群 : 財經、教育、法政、社會與心理、生物工程、遊憩與運動、資訊科學。 <br>適合職務 :公務員、作業員、餐飲服務、傳產技術員、社工、行政秘書、非營利組織、客服人員。';
+                } else if (dominant === 4) {
+                    personality = '貓頭鷹—分析型性格 🦉';
+                    animalIcon = '🦉';
+                    description = '(4).選 4 的答案最多 代表貓頭鷹—分析型性格較為突出 : 貓頭鷹腦子最精明、善於思考與規劃，很適合作幕僚的工作，像是工程師等行業的人，需要貓頭鷹式的縝密邏輯能力。<br>(以事為導向)，代表人物 : 包青天、國父、李昌鈺。 <br>說明： 盡忠職守、謹慎、遵守他人之規定。修正度高者與支配及影響型有很大的差異。他們天生精準且井然有序。由於他們思路清晰，只要知道正確的方向為何，就會受到激勵，因此他們喜歡規矩和秩序。他們對自己和下屬的要求都非常高。這類人遵守紀律，凡事講求細節且維持高標準，不管作什麼都要求完美。 工作時： 從就業的層面而言，他們是傑出的會計師、程式設計師及腦部外科醫師。先試著從他們「挑剔」的角度看看你的產品是否有問題，而且要比競爭對手搶先一步！在飲食方面，服從型會詳讀所有的標籤，而且熟知食物中蛋白質、脂肪和碳水化合物的比例。他們喜歡精打細算，除非廚房用具省錢且堅固，否則他們是不會買的。 <br>適合學群 : 資訊工程、財經、教育、法政、數理化、醫藥衛生、建築與設計、文史哲。 <br>適合職務 : 師字輩 - 教授、工程師、醫師、律師、會計師、精算師、顧問、老師、科學家、宗教相關。';
+                }
+            }
+
+            document.getElementById('personality').innerHTML = `
+                <h2><span class="animal-icon">${animalIcon}</span> ${personality}</h2>
+                <p>${description}</p>
+            `;
+
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+        }
+
+        function resetQuiz() {
+            answers = new Array(questions.length).fill(null);
+            document.getElementById('quizForm').reset();
+            document.getElementById('infoForm').style.display = 'block';
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+            localStorage.removeItem('discAnswers');
+            localStorage.removeItem('studentName');
+            localStorage.removeItem('studentId');
+            updateSubmitButton();
+        }
+
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW registered', reg))
+                .catch(err => console.log('SW registration failed', err));
+        }
+
+        // Load quiz on start
+        loadQuiz();
+        updateSubmitButton();
+
+        // Check for saved answers on load
+        const saved = localStorage.getItem('discAnswers');
+        const savedName = localStorage.getItem('studentName');
+        const savedId = localStorage.getItem('studentId');
+        
+        if (saved) {
+            answers = JSON.parse(saved);
+            answers.forEach((answer, index) => {
+                const radios = document.querySelectorAll(`input[name="q${index}"]`);
+                radios.forEach(radio => {
+                    if (parseInt(radio.value) === answer) {
+                        radio.checked = true;
+                    }
+                });
+            });
+            
+            if (savedName && savedId) {
+                studentName = savedName;
+                studentId = savedId;
+                document.getElementById('studentName').value = studentName;
+                document.getElementById('studentId').value = studentId;
+                document.getElementById('infoForm').style.display = 'none';
+                document.getElementById('quiz').style.display = 'block';
+            }
+            
+            updateSubmitButton();
+        }
+    </script>
+</body>
+</html>
