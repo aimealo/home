@@ -1,0 +1,2893 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>115 學測英文字庫測試</title>
+    <style>
+        /* 全局與響應式基礎設定 */
+        :root {
+            --primary-color: #4a90e2;
+            --primary-hover: #357abd;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* 標題與文字 */
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        h2 {
+            color: #555;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        p {
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* 按鈕樣式 */
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.1s, background-color 0.3s, box-shadow 0.3s;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+        }
+        button:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* 測驗頁面 */
+        #quiz-page { display: none; }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .quiz-prompt-container {
+            background-color: #eef5fc;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px solid #dbeafe;
+        }
+
+        .quiz-word {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 10px;
+            font-family: 'Segoe UI', sans-serif; /* 英文顯示字體 */
+        }
+        .quiz-instruction {
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .option-button {
+            width: 100%;
+            background-color: white;
+            color: #444;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1.1rem;
+            text-align: left;
+            line-height: 1.4;
+            transition: all 0.2s;
+            margin: 0; /* 重置 margin 以適應 grid */
+            box-shadow: none; /* 重置 shadow */
+            white-space: normal; /* 允許中文換行 */
+            display: flex;
+            align-items: center;
+            min-height: 60px; /* 確保按鈕有最小高度 */
+        }
+
+        .option-button:hover:not(:disabled) {
+            background-color: #f1f5f9;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        /* 答題後的選項狀態 */
+        .correct {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724 !important;
+        }
+        .incorrect {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24 !important;
+        }
+
+        /* 結果頁面 */
+        #result-page { display: none; }
+        
+        .result-card {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .score-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            line-height: 1;
+            margin: 10px 0;
+        }
+        .commentary {
+            font-size: 1.2rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .error-analysis h3 {
+            border-left: 5px solid var(--error-color);
+            padding-left: 15px;
+            text-align: left;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+        
+        .error-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .error-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-left: 5px solid var(--error-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .error-header {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .error-detail {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            margin-top: 5px;
+            color: #555;
+            flex-wrap: wrap;
+        }
+        
+        .user-wrong { color: var(--error-color); font-weight: bold; }
+        .correct-right { color: var(--success-color); font-weight: bold; }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* 手機響應式調整 */
+        @media (max-width: 600px) {
+            body { padding: 10px; align-items: flex-start; }
+            .container { padding: 20px; border-radius: 12px; }
+            h1 { font-size: 1.6rem; }
+            .quiz-word { font-size: 2rem; }
+            .options-grid {
+                grid-template-columns: 1fr; /* 手機版單欄顯示 */
+            }
+            .option-button {
+                text-align: center;
+                justify-content: center;
+                padding: 12px;
+                font-size: 1rem;
+            }
+            .error-detail {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 1. 首頁 (Home Page) -->
+        <div id="home-page">
+            <h1>115 學測英文 字彙挑戰</h1>
+            <div style="text-align: center; margin: 30px 0;">
+                <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#4a90e2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+            </div>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 40px;">
+                系統將隨機抽取 10 個英文單字。<br>
+                請您從 6 個中文解釋中，選出正確的答案。
+            </p>
+            <div style="text-align: center;">
+                <button onclick="startQuiz()">開始挑戰 (10 題)</button>
+            
+            <p>您是第 <span id="counter">0</span> 位訪客</p>
+            <script>
+            const initialCount = 1250; 
+            const counterKey = "visitCount";
+            let count = localStorage.getItem(counterKey);
+                if (!count) {
+                   count = initialCount;
+                           } else {
+                            count = parseInt(count, 10);
+                          }
+                 count += 1;
+                 localStorage.setItem(counterKey, count);
+                 document.getElementById("counter").textContent = count;
+            </script>
+           </div>
+        </div>
+
+        <!-- 2. 測驗頁 (Quiz Page) -->
+        <div id="quiz-page">
+            <div class="question-header">
+                <span>學測英文字庫測驗</span>
+                <span>第 <b id="current-q" style="color: var(--primary-color); font-size: 1.4em;">1</b> / 10 題</span>
+            </div>
+            
+            <div class="quiz-prompt-container">
+                <span class="quiz-word" id="english-word">Vocabulary</span>
+                <span class="quiz-instruction">請選擇正確的中文解釋</span>
+            </div>
+            
+            <div class="options-grid" id="options-container">
+                <!-- 選項按鈕將由 JavaScript 生成 -->
+            </div>
+        </div>
+
+        <!-- 3. 結果頁 (Result Page) -->
+        <div id="result-page">
+            <h2>測驗成績單</h2>
+            <div class="result-card">
+                <div>總分</div>
+                <div class="score-value" id="final-score">0</div>
+                <div class="commentary" id="score-commentary"></div>
+            </div>
+
+            <div class="error-analysis" id="error-section">
+                <h3>錯題複習 (<span id="wrong-count">0</span> 題)</h3>
+                <ul class="error-list" id="error-details">
+                    <!-- 錯題細節將由 JavaScript 生成 -->
+                </ul>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="startQuiz()" style="background-color: var(--primary-color);">再測一次</button>
+                <button onclick="window.location.href='https://www.aimealo.com'" style="background-color: #6c757d;">大學備審資料服務中心</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ----------------------------------------------------------------------
+        // 附件字庫資料 (HG1120X.txt 內容)
+        // ----------------------------------------------------------------------
+        const rawData = `
+(a/an, 一個/一種)
+(able, 能夠的)
+(about, 關於/大約)
+(above, 在...之上)
+(according to, 根據)
+(across, 橫越)
+(act, 行動/扮演)
+(action, 行動)
+(actor/actress, 演員)
+(add, 增加)
+(address, 地址)
+(adult, 成人)
+(afraid, 害怕的)
+(after, 在...之後)
+(afternoon, 下午)
+(again, 再次)
+(against, 反對/對抗)
+(age, 年齡/時代)
+(ago, 以前)
+(agree(ment), 同意/協議)
+(ahead, 在前/向前)
+(air, 空氣)
+(airmail, 航空郵件)
+(airplane/plane, 飛機)
+(airport, 機場)
+(all, 所有)
+(allow, 允許)
+(almost, 幾乎)
+(alone, 單獨的)
+(along, 沿著)
+(already, 已經)
+(also, 也)
+(always, 總是)
+(am, 是 (be動詞))
+(among, 在...之中)
+(and, 和/以及)
+(anger, 憤怒)
+(angry, 生氣的)
+(animal, 動物)
+(another, 另一個)
+(answer, 答案/回答)
+(ant, 螞蟻)
+(any, 任何)
+(anything, 任何事物)
+(ape, 猿)
+(appear, 出現)
+(apple, 蘋果)
+(April/Apr., 四月)
+(are, 是 (be動詞))
+(area, 區域)
+(arm (1), 手臂)
+(army, 軍隊)
+(around, 周圍/大約)
+(art, 藝術)
+(as, 作為/如同)
+(ask, 問/要求)
+(at, 在 (某處/某時))
+(August/Aug., 八月)
+(aunt/auntie/aunty, 阿姨/姑姑)
+(autumn/fall, 秋天)
+(away, 離開)
+(baby, 嬰兒)
+(back, 後面/背部)
+(bad, 壞的)
+(bag, 袋子)
+(ball, 球)
+(balloon, 氣球)
+(banana, 香蕉)
+(band, 樂團/帶子)
+(bank (1) (2), 銀行/河岸)
+(bar, 條/酒吧/柵欄)
+(barber, 理髮師)
+(base, 基礎/基地)
+(baseball, 棒球)
+(basic, 基本的)
+(basket, 籃子)
+(basketball, 籃球)
+(bat (1) (2), 球棒/蝙蝠)
+(bath, 洗澡)
+(bathe, 洗澡)
+(bathroom, 浴室)
+(be, 是/存在)
+(beach, 海灘)
+(bear (1), 熊/忍受)
+(beat, 打敗/跳動)
+(beautiful, 美麗的)
+(beauty, 美麗)
+(because, 因為)
+(become, 變成)
+(bed, 床)
+(bee, 蜜蜂)
+(before, 在...之前)
+(begin, 開始)
+(behind, 在...後面)
+(believe, 相信)
+(bell, 鈴/鐘)
+(belong, 屬於)
+(below, 在...下方)
+(beside, 在...旁邊)
+(best, 最好的)
+(better, 更好的)
+(between, 在...之間)
+(bicycle/bike, 腳踏車/自行車)
+(big, 大的)
+(bird, 鳥)
+(birth, 出生)
+(bit, 一點點)
+(bite, 咬)
+(black, 黑色)
+(block, 塊/街區/阻擋)
+(blood, 血液)
+(blow, 吹)
+(blue, 藍色)
+(boat, 船)
+(body, 身體)
+(bone, 骨頭)
+(book (1) (2), 書/預訂)
+(born, 出生的)
+(both, 兩者都)
+(bottom, 底部)
+(bowl, 碗)
+(box, 盒子)
+(boy, 男孩)
+(brave, 勇敢的)
+(bread, 麵包)
+(break, 打破/休息)
+(breakfast, 早餐)
+(bridge, 橋)
+(bright, 明亮的/聰明的)
+(bring, 帶來)
+(brother, 兄弟)
+(brown, 棕色)
+(bug, 蟲子)
+(build, 建造)
+(building, 建築物)
+(bus, 公車)
+(busy, 忙碌的)
+(but, 但是)
+(butter, 奶油)
+(butterfly, 蝴蝶)
+(buy, 買)
+(by, 藉由/在...旁邊)
+(cage, 籠子)
+(cake, 蛋糕)
+(call, 呼叫/打電話)
+(camel, 駱駝)
+(camera, 相機)
+(camp, 露營/營地)
+(can (1) (2), 能夠/罐頭)
+(candy/sweet, 糖果)
+(cap, 帽/蓋子)
+(car, 汽車)
+(card, 卡片)
+(care, 關心/照顧)
+(careful, 小心的)
+(carry, 攜帶)
+(case (1) (2), 情況/箱子/案例)
+(cat, 貓)
+(catch, 抓住)
+(cause, 原因/導致)
+(cent, 分/分幣)
+(center, 中心)
+(certain, 確定的)
+(chair, 椅子)
+(chance, 機會)
+(chart, 圖表)
+(chase, 追逐)
+(check, 檢查/支票)
+(chick, 小雞)
+(chicken, 雞/雞肉)
+(chief, 首領/主要的)
+(child, 小孩)
+(Christmas/Xmas, 聖誕節)
+(church, 教堂)
+(city, 城市)
+(class, 班級/課)
+(clean, 乾淨的/打掃)
+(clear, 清澈的/清楚的)
+(climb, 爬)
+(clock, 時鐘)
+(close (1) (2), 關閉/近的)
+(cloud, 雲)
+(coast, 海岸)
+(coat, 外套)
+(cocoa, 可可)
+(coffee, 咖啡)
+(cola/Coke, 可樂)
+(cold, 寒冷的/感冒)
+(color, 顏色)
+(come, 來)
+(common, 普通的/共同的)
+(continue, 繼續)
+(cook, 煮飯/廚師)
+(cookie/cooky, 餅乾)
+(cool, 涼爽的/酷的)
+(corn, 玉米)
+(correct, 正確的/改正)
+(cost, 花費/成本)
+(count, 數數)
+(country, 國家/鄉村)
+(course, 課程/路線)
+(cover, 覆蓋/蓋子)
+(cow, 牛)
+(cowboy, 牛仔)
+(crow (1), 烏鴉)
+(cry, 哭/叫喊)
+(cub, 幼獸)
+(cup, 杯子)
+(cut, 切/割)
+(cute, 可愛的)
+(daddy/dad/papa/pa/pop, 爸爸)
+(dance, 跳舞)
+(dancer, 舞者)
+(danger, 危險)
+(dark, 黑暗的)
+(date, 日期/約會)
+(daughter, 女兒)
+(day, 天/白天)
+(dead, 死亡的)
+(deal, 處理/交易)
+(dear, 親愛的/昂貴的)
+(death, 死亡)
+(December/Dec., 十二月)
+(decide, 決定)
+(deep, 深的)
+(deer, 鹿)
+(desk, 書桌)
+(die, 死亡)
+(different, 不同的)
+(difficult, 困難的)
+(dig, 挖)
+(dinner, 晚餐)
+(direct, 直接的/引導)
+(dirty, 骯髒的)
+(discover, 發現)
+(dish, 盤子/菜餚)
+(do, 做)
+(doctor/doc, 醫生)
+(dog, 狗)
+(doll, 洋娃娃)
+(dollar/buck, 美元/一塊錢)
+(door, 門)
+(dove, 鴿子)
+(down, 向下)
+(downstairs, 樓下)
+(dozen, 一打)
+(draw, 畫/拉)
+(dream, 夢想/做夢)
+(drink, 喝/飲料)
+(drive, 開車/駕駛)
+(driver, 司機)
+(dry, 乾的)
+(duck, 鴨子)
+(duckling, 小鴨)
+(during, 在...期間)
+(each, 每個)
+(eagle, 老鷹)
+(ear, 耳朵)
+(early, 早的/早地)
+(earth, 地球/泥土)
+(ease, 容易/舒適)
+(east, 東方)
+(easy, 容易的)
+(eat, 吃)
+(edge, 邊緣)
+(egg, 蛋)
+(eight, 八)
+(eighteen, 十八)
+(eighty, 八十)
+(either (1) (2), 兩者之一/也(不))
+(elephant, 大象)
+(eleven, 十一)
+(else, 其他)
+(end, 結束/末端)
+(English, 英文/英國人)
+(enough, 足夠)
+(enter, 進入)
+(equal, 相等的)
+(even (1) (2), 甚至/平坦的)
+(evening, 晚上)
+(ever, 曾經/總是)
+(every, 每個)
+(examination/exam, 考試/檢查)
+(examine, 檢查/考試)
+(example, 例子)
+(except/excepting, 除了)
+(eye, 眼睛)
+(face, 臉/面對)
+(fact, 事實)
+(factory, 工廠)
+(fall, 掉落/秋天)
+(false, 錯誤的/假的)
+(family, 家庭)
+(fan (1), 扇子/迷)
+(far, 遠的/遠地)
+(farm, 農場)
+(farmer, 農夫)
+(fast, 快的/齋戒)
+(fat, 胖的/脂肪)
+(father, 父親)
+(fear, 害怕/恐懼)
+(February/Feb., 二月)
+(feed, 餵養)
+(feel, 感覺)
+(feeling, 感覺/情感)
+(feelings, 感情)
+(few, 很少的)
+(fifteen, 十五)
+(fifty, 五十)
+(fight, 打架/戰鬥)
+(fill, 充滿)
+(final, 最後的/決賽)
+(find, 找到)
+(fine (1) (2), 好的/罰款)
+(finger, 手指)
+(finish, 完成)
+(fire (1) (2), 火/開火/解僱)
+(first, 第一)
+(fish, 魚)
+(five, 五)
+(floor, 地板/樓層)
+(flower, 花)
+(fly (1) (2), 飛/蒼蠅)
+(fog, 霧)
+(follow, 跟隨)
+(food, 食物)
+(foot, 腳/英尺)
+(for, 為了/對於)
+(force, 力量/強迫)
+(foreign, 外國的)
+(forest, 森林)
+(forget, 忘記)
+(fork, 叉子)
+(forty, 四十)
+(four, 四)
+(fourteen, 十四)
+(fox, 狐狸)
+(free, 自由的/免費的)
+(fresh, 新鮮的)
+(Friday/Fri., 星期五)
+(friend, 朋友)
+(frog, 青蛙)
+(from, 從)
+(front, 前面)
+(fruit, 水果)
+(full, 滿的/飽的)
+(fun, 樂趣)
+(funny, 有趣的/好笑的)
+(game, 遊戲/比賽)
+(garden, 花園)
+(gas, 氣體/汽油)
+(general (1), 一般的/將軍)
+(get, 得到)
+(ghost, 鬼)
+(gift, 禮物/天賦)
+(girl, 女孩)
+(give, 給)
+(glad, 高興的)
+(glass, 玻璃/玻璃杯)
+(glasses, 眼鏡)
+(go, 去)
+(god/goddess, 神/女神)
+(gold, 黃金)
+(good, 好的)
+(good-bye/goodbye/good-by/ goodby/bye-bye/bye, 再見)
+(goose, 鵝)
+(grand, 宏偉的/重要的)
+(grandchild, 孫子/孫女/外孫/外孫女)
+(granddaughter, 孫女/外孫女)
+(grandfather/grandpa, 祖父/爺爺/外公)
+(grandmother/grandma, 祖母/奶奶/外婆)
+(grandson, 孫子/外孫)
+(grass, 草)
+(gray/grey, 灰色)
+(great, 偉大的/很好的)
+(green, 綠色)
+(ground, 地面)
+(group, 團體)
+(grow, 生長/種植)
+(guess, 猜測)
+(guest, 客人)
+(guide, 引導/導遊/指南)
+(gun, 槍)
+(hair, 頭髮)
+(haircut, 理髮)
+(half, 一半)
+(ham, 火腿)
+(hand, 手)
+(happen, 發生)
+(happy, 快樂的)
+(hard, 硬的/困難的/努力地)
+(hat, 帽子)
+(hate, 討厭/恨)
+(have, 有/吃)
+(he, 他)
+(head, 頭)
+(health, 健康)
+(hear, 聽見)
+(heart, 心臟/心)
+(heat, 熱/加熱)
+(heavy, 重的)
+(hello, 你好)
+(help, 幫助)
+(her(s), 她的)
+(here, 這裡)
+(high, 高的)
+(hill, 小山)
+(him, 他 (受格))
+(his, 他的)
+(history, 歷史)
+(hit, 打擊)
+(hold, 拿著/舉行)
+(hole, 洞)
+(holiday, 假日)
+(home, 家)
+(homework, 家庭作業)
+(hope, 希望)
+(horse, 馬)
+(hot, 熱的)
+(hour, 小時)
+(house, 房子)
+(how, 如何)
+(huge, 巨大的)
+(human, 人類的/人)
+(hundred, 一百)
+(hungry, 飢餓的)
+(hurt, 傷害/疼痛)
+(husband, 丈夫)
+(I, 我)
+(ice, 冰)
+(idea, 想法)
+(if, 如果)
+(important, 重要的)
+(in, 在...裡面)
+(inch, 英吋)
+(inside, 裡面)
+(interest, 興趣/利息)
+(into, 進入)
+(iron, 鐵/熨斗/熨燙)
+(is, 是 (be動詞))
+(it, 它)
+(its, 它的)
+(jam (1), 果醬/堵塞)
+(January/Jan., 一月)
+(job, 工作)
+(join, 加入)
+(joke, 笑話)
+(joy, 喜悅)
+(juice, 果汁)
+(July/Jul., 七月)
+(jump, 跳)
+(June/Jun., 六月)
+(just (1) (2), 僅僅/公正的)
+(keep, 保持/保留)
+(keeper, 看守人/保管人)
+(key (1) (2), 鑰匙/關鍵)
+(kick, 踢)
+(kid, 小孩/開玩笑)
+(kill, 殺死)
+(kind (1) (2), 種類/親切的)
+(king, 國王)
+(kiss, 親吻)
+(kitchen, 廚房)
+(kite, 風箏)
+(kitten/kitty, 小貓)
+(knee, 膝蓋)
+(knife, 刀子)
+(know, 知道)
+(lack, 缺乏)
+(lady, 女士/淑女)
+(lake, 湖)
+(lamb, 羔羊/羊肉)
+(lamp, 燈)
+(land (1) (2), 土地/登陸)
+(large, 大的)
+(last (1) (2), 最後的/持續)
+(late, 遲的/晚的)
+(laugh, 笑)
+(law, 法律)
+(lay, 放置/下蛋)
+(lazy, 懶惰的)
+(lead (1), 領導/引導)
+(leader, 導師/領袖)
+(leaf, 葉子)
+(learn, 學習)
+(least, 最少的/最小的)
+(leave, 離開/留下)
+(left, 左邊/剩下的)
+(leg, 腿)
+(less, 較少的)
+(lesson, 課/教訓)
+(let, 讓)
+(letter (1) (2), 信/字母)
+(level, 水平/等級)
+(lie, 說謊/躺)
+(life, 生命/生活)
+(lift, 舉起/電梯)
+(light (1) (2), 光線/輕的/點燃)
+(like (1) (2), 喜歡/像)
+(likely, 可能的)
+(lily, 百合)
+(line, 線/排隊)
+(lion, 獅子)
+(lip, 嘴唇)
+(list, 清單)
+(listen, 聆聽)
+(little, 小的/一點點)
+(live (1) (2), 居住/活著的)
+(long (1) (2), 長的/渴望)
+(look, 看)
+(lot, 許多/籤)
+(loud, 大聲的)
+(love, 愛)
+(low, 低的)
+(lucky, 幸運的)
+(lunch/luncheon, 午餐)
+(machine, 機器)
+(mad, 生氣的/瘋狂的)
+(mail, 郵件)
+(make, 製造/使)
+(man, 男人/人類)
+(many, 很多)
+(map, 地圖)
+(March/Mar., 三月)
+(market, 市場)
+(marry, 結婚)
+(master (1) (2), 大師/主人/精通)
+(match (1), 火柴/比賽/相配)
+(matter (1) (2), 事情/物質/重要)
+(May, 五月)
+(may, 可能/可以)
+(maybe, 也許)
+(mean (1) (2), 意思/刻薄的)
+(meat, 肉)
+(me, 我(受格))
+(meet, 遇見)
+(middle, 中間)
+(mile, 英里)
+(milk, 牛奶)
+(mind, 頭腦/介意)
+(minute, 分鐘)
+(Miss/miss, 小姐/錯過/想念)
+(mistake, 錯誤)
+(moment, 片刻/時刻)
+(mommy/momma/mom/ mam(m)a/ma/mummy, 媽媽)
+(Monday/Mon., 星期一)
+(money, 金錢)
+(monkey, 猴子)
+(month, 月份)
+(moon, 月亮)
+(more, 更多)
+(morning, 早上)
+(most, 最/大部分)
+(mother, 母親)
+(mountain, 山)
+(mouse, 老鼠)
+(mouth, 嘴巴)
+(move(ment), 移動/運動)
+(movie/(motion) picture/film/ cinema, 電影/電影院)
+(Mr./mister, 先生)
+(Mrs., 夫人/太太)
+(Ms., 女士)
+(much, 很多)
+(mud, 泥巴)
+(mug, 馬克杯/大杯子)
+(music, 音樂)
+(must, 必須)
+(my, 我的)
+(name, 名字/命名)
+(nation, 國家/民族)
+(nature, 自然/本性)
+(near, 靠近)
+(neck, 脖子)
+(need, 需要)
+(never, 從不)
+(new, 新的)
+(news, 新聞)
+(newspaper, 報紙)
+(next, 下一個/接著)
+(nice, 好的/友善的)
+(night, 夜晚)
+(nine, 九)
+(nineteen, 十九)
+(ninety, 九十)
+(no/nope, 不)
+(noise, 噪音)
+(noisy, 吵鬧的)
+(noon, 中午)
+(nor, 也不)
+(north, 北方)
+(nose, 鼻子)
+(not, 不)
+(note, 筆記/音符/紙幣)
+(nothing, 沒什麼)
+(notice, 注意/通知)
+(November/Nov., 十一月)
+(now, 現在)
+(number, 數字/號碼)
+(nurse, 護士)
+(O.K./OK/okay, 好的/可以)
+(ocean, 海洋)
+(o'clock, ...點鐘)
+(October/Oct., 十月)
+(of, ...的)
+(off, 離開/關閉)
+(office, 辦公室)
+(officer, 軍官/官員/警官)
+(often, 經常)
+(oil, 油)
+(old, 老的/舊的)
+(on, 在...上面/開著)
+(once, 一次/一旦)
+(one, 一/一個)
+(only, 只有/僅僅)
+(open, 打開/開放的)
+(or, 或者)
+(orange, 橙子/橙色)
+(order, 命令/順序/訂購)
+(other, 其他的)
+(our(s), 我們的)
+(out, 外面/出去)
+(outside, 外面)
+(over, 在...上方/結束)
+(own, 自己的/擁有)
+(page, 頁)
+(paint, 油漆/繪畫)
+(pair, 一雙/一對)
+(pants/trousers, 褲子)
+(papa/pop, 爸爸)
+(paper, 紙)
+(parent(s), 父母)
+(park (1) (2), 公園/停車)
+(part (1) (2), 部分/零件/分開)
+(party, 派對/政黨)
+(pass, 通過/傳遞)
+(past (1) (2), 過去/經過)
+(pay (1) (ment), 付錢/薪水)
+(pen, 筆)
+(pencil, 鉛筆)
+(people, 人們)
+(perhaps, 或許)
+(person, 人)
+(pet, 寵物)
+(piano, 鋼琴)
+(picture, 圖畫/照片)
+(pie, 派)
+(piece, 片/塊)
+(pig, 豬)
+(place, 地方/放置)
+(plan, 計畫)
+(plant (1) (2), 植物/工廠/種植)
+(play, 玩/演奏)
+(player, 玩家/選手)
+(playground, 操場)
+(please, 請/使高興)
+(pocket, 口袋)
+(poetry, 詩歌/詩集)
+(point (1) (2), 點/指出)
+(police, 警察)
+(policeman/cop, 警察)
+(pond, 池塘)
+(pool, 水池/游泳池)
+(poor, 貧窮的/可憐的)
+(popcorn, 爆米花)
+(position, 位置/職位)
+(possible, 可能的)
+(power, 權力/力量)
+(practice, 練習/實行)
+(prepare, 準備)
+(pretty (1) (2), 漂亮的/相當地)
+(price, 價格)
+(print, 印刷/列印)
+(problem, 問題)
+(prove, 證明)
+(public, 公眾的/公眾)
+(pull, 拉)
+(purple, 紫色)
+(purpose, 目的)
+(push, 推)
+(put, 放置)
+(queen, 女王)
+(question, 問題/詢問)
+(quick, 快的)
+(quiet, 安靜的)
+(quite, 相當)
+(race (1) (2), 賽跑/種族)
+(radio, 收音機)
+(railroad, 鐵路)
+(rain, 雨/下雨)
+(rainbow, 彩虹)
+(raise, 舉起/養育/增加)
+(rat, 老鼠)
+(reach, 達到/伸手)
+(read, 閱讀)
+(ready, 準備好的)
+(real, 真實的)
+(reason, 理由)
+(receive, 收到)
+(red, 紅色)
+(remember, 記得)
+(report, 報告)
+(rest, 休息/剩餘部分)
+(return, 返回)
+(rice, 米飯/稻米)
+(rich, 富有的/豐富的)
+(seesaw, 蹺蹺板)
+(ride, 騎/搭乘)
+(right (1) (2), 正確的/右邊/權利)
+(ring (1) (2), 戒指/按鈴/環繞)
+(rise, 上升)
+(river, 河流)
+(road, 道路)
+(robot, 機器人)
+(rock (1), 岩石)
+(roll, 滾動/麵包捲)
+(roof, 屋頂)
+(room, 房間/空間)
+(rooster, 公雞)
+(root, 根)
+(rope, 繩子)
+(rose, 玫瑰/上升(rise的過去式))
+(round, 圓的/回合)
+(row (1) (2), 一排/划船)
+(rub, 摩擦/擦)
+(rubber, 橡膠/橡皮擦)
+(rule, 規則/統治)
+(run, 跑/運作)
+(sad, 悲傷的)
+(safe (1) (2), 安全的/保險箱)
+(sail, 航行/帆)
+(sale, 販賣/特價)
+(salt, 鹽)
+(same, 相同的)
+(sand, 沙)
+(Saturday/Sat., 星期六)
+(save, 拯救/儲存)
+(saw, 看見(see的過去式)/鋸子)
+(say, 說)
+(scare, 驚嚇)
+(scene, 景色/場景)
+(school, 學校)
+(sea, 海)
+(season, 季節)
+(seat, 座位)
+(second (1) (2), 第二/秒)
+(see, 看見)
+(seed, 種子)
+(seem, 似乎)
+(self, 自己)
+(selfish, 自私的)
+(sell, 賣)
+(send, 寄送)
+(sense, 感覺/意義)
+(sentence, 句子/判決)
+(September/Sept., 九月)
+(serve, 服務/供應)
+(service, 服務)
+(set (1) (2), 設定/一套/日落)
+(seven, 七)
+(seventeen, 十七)
+(seventy, 七十)
+(several, 幾個)
+(shake, 搖動)
+(shall, 將要/應該)
+(shape, 形狀)
+(shark, 鯊魚)
+(sharp, 鋒利的/清晰的)
+(she, 她)
+(sheep, 綿羊)
+(sheet, 床單/一張)
+(shell, 殼)
+(shine, 發光)
+(ship, 船/艦)
+(shirt, 襯衫)
+(shoe(s), 鞋子)
+(shop (1)/store, 商店)
+(shop (2), 購物)
+(shore, 岸邊)
+(short, 短的/矮的)
+(shot, 射擊/注射)
+(shoulder, 肩膀)
+(shout, 喊叫)
+(show, 展示/表演)
+(shut, 關閉)
+(shy, 害羞的)
+(sick, 生病的)
+(side, 邊/側面)
+(sight, 視力/景象)
+(silly, 愚蠢的)
+(silver, 銀/銀色的)
+(simple, 簡單的)
+(since, 自從/因為)
+(sing, 唱歌)
+(singer, 歌手)
+(sir, 先生)
+(sister, 姊妹)
+(sit, 坐)
+(six, 六)
+(sixteen, 十六)
+(sixty, 六十)
+(size, 尺寸/大小)
+(skill, 技能)
+(skin, 皮膚)
+(sky, 天空)
+(sleep, 睡覺)
+(slow, 慢的/慢地)
+(small, 小的)
+(smart, 聰明的/時髦的)
+(smell, 氣味/聞)
+(smile, 微笑)
+(smoke, 煙/抽煙)
+(snake, 蛇)
+(snow, 雪/下雪)
+(so (1) (2), 如此/所以)
+(soap, 肥皂)
+(soda, 蘇打水/汽水)
+(sofa, 沙發)
+(soft, 柔軟的)
+(soil, 土壤)
+(some, 一些)
+(someone, 某人)
+(something, 某事/某物)
+(sometimes, 有時候)
+(son, 兒子)
+(song, 歌曲)
+(soon, 很快)
+(sorry, 抱歉的)
+(soul, 靈魂)
+(sound (1) (2), 聲音/聽起來/健全的)
+(soup, 湯)
+(sour, 酸的)
+(south, 南方)
+(space, 空間/太空)
+(speak, 說話)
+(special, 特別的)
+(speech, 演講/言語)
+(spell, 拼寫)
+(spend, 花費(時間/金錢))
+(spoon, 湯匙)
+(sport, 運動)
+(spring (1), 春天/彈簧/泉水)
+(stair, 樓梯)
+(stand, 站立/忍受)
+(star, 星星/明星)
+(start, 開始)
+(state (1), 州/國家)
+(state(ment) (2), 聲明/狀況)
+(station, 車站/站)
+(stay, 停留)
+(step, 步驟/腳步)
+(still (1) (2), 仍然/靜止的)
+(stone, 石頭)
+(stop, 停止)
+(story (1) (2), 故事/樓層)
+(strange, 奇怪的/陌生的)
+(street, 街道)
+(strong, 強壯的)
+(student, 學生)
+(study (1) (2), 學習/書房/研究)
+(stupid, 愚蠢的)
+(such, 這樣的)
+(sugar, 糖)
+(summer, 夏天)
+(sun, 太陽)
+(Sunday/Sun., 星期日)
+(super, 超級的)
+(supper, 晚餐/晚飯)
+(sure, 確定的)
+(surprise, 驚喜)
+(sweet, 甜的)
+(swim, 游泳)
+(table, 桌子)
+(tail, 尾巴)
+(take, 拿/帶)
+(tale, 故事)
+(talk, 說話/交談)
+(tall, 高的)
+(taste, 味道/嚐)
+(taxicab/taxi/cab, 計程車)
+(tea, 茶)
+(teach, 教導)
+(teacher, 老師)
+(tell, 告訴)
+(ten, 十)
+(than, 比)
+(thank, 感謝)
+(that, 那個/那些)
+(the, 這/那)
+(their(s), 他們的)
+(them, 他們(受格))
+(then, 然後/那時)
+(there, 那裡/有)
+(these, 這些)
+(they, 他們)
+(thing, 事物)
+(think, 思考)
+(third, 第三)
+(thirteen, 十三)
+(thirty, 三十)
+(this, 這個)
+(those, 那些)
+(though, 雖然/儘管)
+(thought, 想法/思考(think的過去式))
+(thousand, 一千)
+(three, 三)
+(throw, 丟/投)
+(Thursday/Thurs./Thur., 星期四)
+(thus, 因此)
+(ticket, 票)
+(tie (1) (2), 領帶/繫/平手)
+(tiger, 老虎)
+(time, 時間/次數)
+(tiny, 微小的)
+(tire (1) (2), 輪胎/使疲倦)
+(to, 到/向)
+(today, 今天)
+(together, 一起)
+(tomorrow, 明天)
+(tone, 語氣/音調)
+(tonight, 今晚)
+(too, 也/太過)
+(tool, 工具)
+(top, 頂部/陀螺)
+(total, 總計/總數)
+(touch, 觸摸)
+(toward(s), 朝向)
+(town, 城鎮)
+(toy, 玩具)
+(train (1) (2), 火車/訓練)
+(tree, 樹)
+(trip, 旅行)
+(trouble, 麻煩)
+(true, 真實的)
+(try, 嘗試)
+(T-shirt, T恤)
+(Tuesday/Tues./Tue., 星期二)
+(tummy, 肚子)
+(turn, 轉動/輪流)
+(twelve, 十二)
+(twenty, 二十)
+(twice, 兩次)
+(two, 二)
+(uncle, 叔叔/舅舅/伯父/姑丈/姨丈)
+(under, 在...下面)
+(understand, 理解)
+(unit, 單位/部門)
+(until/till, 直到)
+(up, 向上)
+(upstairs, 樓上)
+(us, 我們(受格))
+(use, 使用)
+(useful, 有用的)
+(vegetable, 蔬菜)
+(very (1), 非常)
+(view, 景色/看法)
+(visit, 拜訪)
+(voice, 聲音)
+(wait, 等待)
+(walk, 走路)
+(wall, 牆)
+(want, 想要)
+(war, 戰爭)
+(warm, 溫暖的)
+(wash, 洗)
+(waste, 浪費)
+(watch (1) (2), 手錶/觀看)
+(water, 水)
+(way, 方式/道路)
+(we, 我們)
+(weak, 虛弱的)
+(wear, 穿/戴)
+(weather, 天氣)
+(wedding, 婚禮)
+(Wednesday/Wed./Weds., 星期三)
+(week, 星期/週)
+(weekend, 週末)
+(weigh, 稱重)
+(weight, 重量)
+(welcome, 歡迎)
+(well (1) (2), 好地/井)
+(west, 西方)
+(what, 什麼)
+(when, 何時/當...時)
+(where, 哪裡)
+(whether, 是否)
+(which, 哪一個)
+(while (1) (2) (3), 當...時/雖然/一段時間)
+(white, 白色)
+(who, 誰)
+(whole, 整個的)
+(whom, 誰(受格))
+(whose, 誰的)
+(why, 為什麼)
+(wide, 寬的)
+(wife, 妻子)
+(will (1) (2), 將會/意志)
+(win, 贏)
+(wind (1) (2), 風/纏繞/上發條)
+(window, 窗戶)
+(wine, 酒/葡萄酒)
+(winter, 冬天)
+(wish, 希望/願望)
+(with, 和/用)
+(woman, 女人)
+(wood(s), 木頭/樹林)
+(word, 單字/話)
+(work, 工作)
+(worker, 工人/工作者)
+(world, 世界)
+(worm, 蠕蟲)
+(worry, 擔心)
+(worse, 更糟的)
+(worst, 最糟的)
+(write, 寫)
+(writer, 作家)
+(wrong, 錯誤的)
+(yam/sweet potato, 芋頭/地瓜)
+(year, 年)
+(yellow, 黃色)
+(yes/yeah, 是/對)
+(yesterday, 昨天)
+(yet, 仍然/還沒)
+(you, 你/你們)
+(young, 年輕的)
+(your(s), 你的/你們的)
+(yucky, 噁心的/難吃的)
+(yummy, 好吃的)
+(zero, 零)
+(zoo, 動物園)
+
+(ability, 能力)
+(abroad, 在國外)
+(absence, 缺席)
+(accept, 接受)
+(active, 活躍的)
+(addition, 增加/加法)
+(advance, 前進/進步)
+(affair, 事情/事務)
+(aid, 幫助/援助)
+(aircraft, 航空器/飛機)
+(airline, 航空公司)
+(alarm, 警報/使驚恐)
+(album, 相簿/專輯)
+(alike, 相似的/一樣地)
+(alive, 活著的)
+(aloud, 大聲地)
+(although, 雖然/儘管)
+(altogether, 完全/總共)
+(ancient, 古代的/古老的)
+(ankle, 腳踝)
+(anybody/anyone, 任何人)
+(anytime, 任何時候)
+(apartment, 公寓)
+(appearance, 外表/出現)
+(appetite, 食慾)
+(apply, 申請/應用)
+(argue(ment), 爭論/辯論)
+(arrange(ment), 安排/整理)
+(arrest, 逮捕)
+(arrive, 到達)
+(arrow, 箭/箭號)
+(article (2)/essay, 文章/論文)
+(artist, 藝術家)
+(assistant, 助理/助手)
+(attack, 攻擊)
+(attend, 出席/照料)
+(attention, 注意)
+(avoid, 避免)
+(baby-sit, 照顧嬰兒)
+(bake, 烘烤)
+(balcony, 陽臺)
+(banker, 銀行家)
+(barbecue/BBQ, 烤肉)
+(basement, 地下室)
+(battle, 戰鬥)
+(bean, 豆子)
+(beard, 鬍鬚)
+(beginner, 初學者)
+(belief, 信仰/相信)
+(belt, 皮帶)
+(besides, 此外/除了…之外)
+(bill, 帳單/鈔票)
+(bitter, 苦的)
+(blind, 瞎的/盲人)
+(bomb, 炸彈)
+(borrow, 借入)
+(boss, 老闆)
+(bother, 打擾)
+(brain, 大腦)
+(branch, 樹枝/分支)
+(brand, 品牌)
+(brick, 磚塊)
+(brief, 簡短的)
+(broadcast, 廣播)
+(bundle, 捆/束)
+(burn, 燃燒)
+(burst, 爆裂)
+(business, 商業/業務)
+(button, 按鈕/鈕扣)
+(cabbage, 高麗菜)
+(cable, 纜線)
+(café/cafe, 咖啡館)
+(calendar, 日曆)
+(calm, 平靜的)
+(cancel, 取消)
+(cancer, 癌症)
+(captain, 隊長/船長)
+(carpet, 地毯)
+(carrot, 紅蘿蔔)
+(cartoon, 卡通)
+(cash, 現金)
+(castle, 城堡)
+(cave, 洞穴)
+(ceiling, 天花板)
+(central, 中央的/核心的)
+(century, 世紀)
+(change (1) (2), 改變/零錢)
+(character, 人物/性格)
+(charge (1) (2), 收費/充電/控告)
+(charming, 迷人的)
+(cheap, 便宜的)
+(cheat, 欺騙/作弊)
+(chef, 主廚)
+(chemical, 化學的/化學製品)
+(chess, 西洋棋)
+(chest (1) (2), 胸部/箱子)
+(childhood, 童年)
+(choke, 窒息)
+(choir, 合唱團)
+(choose, 選擇)
+(coach, 教練/長途客車)
+(coal, 煤)
+(collect, 收集)
+(college, 大學/學院)
+(comb, 梳子/梳)
+(comfortable, 舒服的)
+(committee, 委員會)
+(compare, 比較)
+(complain, 抱怨)
+(complete, 完成的/完成)
+(computer, 電腦)
+(concern, 關心/擔憂/事務)
+(concert, 演唱會/音樂會)
+(condition, 條件/狀況)
+(confidence, 信心)
+(confuse, 使困惑)
+(connect, 連接)
+(consider, 考慮)
+(contain, 包含)
+(control, 控制)
+(conversation, 對話)
+(costume, 服裝/戲服)
+(cottage, 小屋)
+(cough, 咳嗽)
+(couple, 一對/夫婦)
+(courage, 勇氣)
+(create, 創造)
+(crowd, 人群)
+(culture, 文化)
+(curious, 好奇的)
+(customer, 顧客)
+(damage, 損害)
+(danger, 危險)
+(date, 日期/約會)
+(deal, 處理/交易)
+(debate, 辯論)
+(degree, 程度/學位)
+(delay, 延遲)
+(deliver, 遞送)
+(deposit, 存款/押金)
+(desert, 沙漠/遺棄)
+(design, 設計)
+(detail, 細節)
+(develop, 發展)
+(diet, 飲食/節食)
+(dig, 挖)
+(direction, 方向/指示)
+(disagree, 不同意)
+(disappear, 消失)
+(disaster, 災難)
+(discuss, 討論)
+(disease, 疾病)
+(distance, 距離)
+(divide, 分割)
+(dizzy, 暈眩的)
+(dolphin, 海豚)
+(donkey, 驢子)
+(dot, 點)
+(double, 兩倍的/雙的)
+(doubt, 懷疑)
+(downtown, 市中心)
+(dragon, 龍)
+(drama, 戲劇)
+(drawer, 抽屜)
+(drug, 藥物/毒品)
+(drugstore, 藥房)
+(drum, 鼓)
+(dull, 遲鈍的/無趣的)
+(dumpling, 餃子)
+(duty, 責任/義務)
+(earring, 耳環)
+(eastern, 東方的)
+(education, 教育)
+(effort, 努力)
+(either, 任何一個/也(不))
+(elbow, 手肘)
+(elect, 選舉)
+(electric, 電動的/電力的)
+(elsewhere, 在別處)
+(encourage, 鼓勵)
+(enemy, 敵人)
+(energy, 能源/精力)
+(engine, 引擎)
+(engineer, 工程師)
+(enjoy, 享受)
+(entrance, 入口)
+(environment, 環境)
+(eraser, 橡皮擦)
+(escape, 逃脫)
+(especially, 尤其/特別)
+(event, 事件)
+(everybody, 每個人)
+(everywhere, 到處)
+(evidence, 證據)
+(evil, 邪惡的/邪惡)
+(exact, 準確的)
+(excellent, 優秀的)
+(excuse, 藉口/原諒)
+(exit, 出口)
+(experience, 經驗/經歷)
+(expert, 專家)
+(explain, 解釋)
+(express, 表達/快車)
+(extra, 額外的)
+(fair (1) (2), 公平的/美麗的/市集)
+(fame, 名聲)
+(famous, 著名的)
+(fantastic, 極好的)
+(fashion, 時尚)
+(feed, 餵食)
+(fever, 發燒)
+(fifth, 第五)
+(future, 未來)
+(garden, 花園)
+(gasoline, 汽油)
+(giant, 巨大的/巨人)
+(global, 全球的)
+(goods, 貨物)
+(government, 政府)
+(grocery, 雜貨店)
+(habit, 習慣)
+(hall, 大廳/走廊)
+(handsome, 英俊的)
+(hardware, 硬體/五金)
+(harm, 傷害)
+(haze, 霾/薄霧/迷糊)
+(headache, 頭痛)
+(health, 健康)
+(heater, 暖氣機)
+(heavy, 重的)
+(height, 高度)
+(hell, 地獄)
+(hero, 英雄)
+(history, 歷史)
+(hole, 洞)
+(honest, 誠實的)
+(honor, 榮譽)
+(horrible, 可怕的)
+(hospital, 醫院)
+(host, 主人/主持人)
+(housewife, 家庭主婦)
+(human, 人類的/人)
+(humor, 幽默)
+(hunt, 打獵/尋找)
+(hurry, 匆忙)
+(idea, 想法)
+(ill, 生病的)
+(imagine, 想像)
+(immediately, 立刻)
+(impossible, 不可能的)
+(indeed, 確實)
+(industry, 工業/行業)
+(inn, 小旅館)
+(insect, 昆蟲)
+(instrument, 儀器/樂器)
+(intelligent, 聰明的)
+(introduce, 介紹)
+(invite, 邀請)
+(jail, 監獄)
+(jog, 慢跑)
+(journalist, 記者)
+(judgment/judgement, 判斷/審判)
+(junior, 年少的/下級的)
+(keeper, 看守人/保管人)
+(kilogram/kilo, 公斤)
+(knowledge, 知識)
+(laboratory/lab, 實驗室)
+(ladder, 梯子)
+(language, 語言)
+(laptop, 筆記型電腦)
+(later, 稍後/之後)
+(leader, 導師/領袖)
+(least, 最少的/最小的)
+(lecture, 演講/授課)
+(legal, 法律的/合法的)
+(level, 水平/等級)
+(library, 圖書館)
+(limit, 限制)
+(list, 清單)
+(local, 當地的)
+(lock, 鎖/鎖住)
+(loudly, 大聲地)
+(main, 主要的)
+(majority, 大多數)
+(manage, 管理/經營)
+(maple, 楓樹)
+(marathon, 馬拉松)
+(material, 材料)
+(meal, 餐)
+(measure, 測量)
+(media, 媒體)
+(meeting, 會議)
+(member, 成員)
+(mention, 提及)
+(mess, 混亂/髒亂)
+(metal, 金屬)
+(method, 方法)
+(microwave, 微波爐)
+(military, 軍事的/軍隊)
+(million, 百萬)
+(mistake, 錯誤)
+(mix, 混合)
+(model, 模型/榜樣)
+(modern, 現代的)
+(moment, 片刻)
+(mood, 心情)
+(move, 移動)
+(murder, 謀殺)
+(museum, 博物館)
+(nail, 釘子/指甲)
+(nation, 國家)
+(national, 國家的)
+(natural, 自然的)
+(necessary, 必要的)
+(neighbor, 鄰居)
+(nervous, 緊張的)
+(notice, 注意/通知)
+(nowhere, 無處)
+(object, 物體/反對)
+(occasion, 場合)
+(offer, 提供)
+(official, 官方的/官員)
+(operation, 手術/操作)
+(opinion, 意見)
+(ordinary, 普通的)
+(organize, 組織)
+(original, 原始的)
+(ourselves, 我們自己)
+(outcome, 結果)
+(owner, 所有者)
+(package, 包裹)
+(pain, 疼痛)
+(painter, 畫家)
+(pale, 蒼白的)
+(palm, 手掌/棕櫚樹)
+(pardon, 原諒)
+(passenger, 乘客)
+(patrol, 巡邏)
+(peace, 和平)
+(percent, 百分之...)
+(perfect, 完美的)
+(perform, 表演/執行)
+(perhaps, 或許)
+(period, 期間/句號)
+(permit, 允許/許可證)
+(personally, 親自地/就個人而言)
+(physical, 身體的/物理的)
+(picnic, 野餐)
+(pilot, 飛行員)
+(plain, 樸素的/平原)
+(planet, 行星)
+(platform, 月台/講台)
+(poet, 詩人)
+(poison, 毒藥/毒害)
+(polite, 有禮貌的)
+(politician, 政治家)
+(poodle, 貴賓犬)
+(popular, 流行的/受歡迎的)
+(population, 人口)
+(positive, 積極的/正面的)
+(postcard, 明信片)
+(postpone, 延期)
+(praise, 讚美)
+(prefer, 偏好)
+(prepare, 準備)
+(present (1) (2), 現在/禮物/出席的)
+(president, 總統/主席)
+(press, 按壓/新聞界)
+(prevent, 預防/阻止)
+(primary, 主要的/初級的)
+(prince, 王子)
+(process, 過程/處理)
+(produce, 生產/農產品)
+(progress, 進步)
+(promise, 承諾)
+(proper, 適當的)
+(protect, 保護)
+(proud, 驕傲的)
+(prove, 證明)
+(provide, 提供)
+(public, 公眾的/公眾)
+(punish, 懲罰)
+(purchase, 購買)
+(purpose, 目的)
+(pushed, 被推的)
+(put, 放置)
+(quality, 品質)
+(quantity, 數量)
+(quarter, 四分之一/季度)
+(quiz, 測驗)
+(railroad, 鐵路)
+(rapid, 快速的)
+(rate, 速率/比率)
+(raw, 生的/未加工的)
+(realize, 意識到/實現)
+(record, 紀錄/唱片)
+(refuse, 拒絕)
+(regular, 規律的/普通的)
+(remain, 保持/剩餘)
+(remind, 提醒)
+(remove, 移除)
+(represent, 代表)
+(require, 要求)
+(research, 研究)
+(resource, 資源)
+(responsibility, 責任)
+(result, 結果)
+(return, 返回)
+(review, 複習/評論)
+(rise, 上升)
+(risk, 風險)
+(roast, 烤)
+(route, 路線)
+(routine, 例行公事/慣例)
+(salary, 薪水)
+(sample, 樣品)
+(schedule, 行程表/安排)
+(science, 科學)
+(scientist, 科學家)
+(search, 搜尋)
+(secret, 秘密)
+(secretary, 秘書)
+(section, 部分/區塊)
+(security, 安全)
+(selfish, 自私的)
+(senior, 年長的/高級的)
+(sense, 感覺/意義)
+(serious, 嚴肅的/嚴重的)
+(service, 服務)
+(shadow, 影子)
+(share, 分享/份額)
+(shine, 發光)
+(shock, 震驚)
+(shoot, 射擊/拍攝)
+(silence, 沉默)
+(similar, 相似的)
+(simple, 簡單的)
+(sincere, 真誠的)
+(skate, 溜冰)
+(skill, 技能)
+(slowly, 慢慢地)
+(smooth, 平滑的/順利的)
+(society, 社會)
+(soldier, 士兵)
+(space, 空間/太空)
+(spare, 備用的/空閒的)
+(special, 特別的)
+(speech, 演講/言語)
+(speed, 速度)
+(spirit, 精神/靈魂)
+(station, 車站/站)
+(steal, 偷竊)
+(stomach, 胃/肚子)
+(store, 商店)
+(storm, 暴風雨)
+(strategy, 策略)
+(stress, 壓力/強調)
+(strict, 嚴格的)
+(struggle, 掙扎/努力)
+(style, 風格)
+(succeed, 成功)
+(sudden, 突然的)
+(suggest, 建議)
+(support, 支持)
+(suppose, 假設/認為)
+(surround, 圍繞)
+(survive, 存活)
+(suspect, 懷疑/嫌疑犯)
+(swing, 搖擺/鞦韆)
+(system, 系統)
+(tale, 故事)
+(talent, 天賦)
+(target, 目標)
+(task, 任務)
+(technology, 科技)
+(temple, 寺廟)
+(terrible, 可怕的)
+(territory, 領土)
+(theater, 劇院)
+(thick, 厚的/濃密的)
+(thin, 薄的/瘦的)
+(thousand, 千)
+(thumb, 拇指)
+(thunder, 雷聲)
+(tight, 緊的)
+(tiny, 微小的)
+(toast, 吐司/烤)
+(toilet, 馬桶/廁所)
+(topic, 主題)
+(total, 總計)
+(touch, 觸摸)
+(tough, 堅韌的/困難的)
+(tour, 旅遊)
+(tradition, 傳統)
+(traffic, 交通)
+(transport, 運輸)
+(travel, 旅行)
+(treat, 對待/治療/請客)
+(trouble, 麻煩)
+(true, 真實的)
+(trust, 信任)
+(truth, 真相)
+(try, 嘗試)
+(type, 類型/打字)
+(ugly, 醜陋的)
+(uniform, 制服)
+(unless, 除非)
+(usual, 通常的)
+(valley, 山谷)
+(value, 價值)
+(van, 廂型車)
+(various, 各種不同的)
+(vase, 花瓶)
+(vegetable, 蔬菜)
+(victory, 勝利)
+(village, 村莊)
+(violence, 暴力)
+(visible, 可見的)
+(voice, 聲音)
+(volcano, 火山)
+(volunteer, 志願者/志願)
+(vote, 投票)
+(wage, 工資/薪水)
+(wander, 漫步/閒逛)
+(warning, 警告)
+(waste, 浪費)
+(weapon, 武器)
+(weather, 天氣)
+(website, 網站)
+(wedding, 婚禮)
+(weight, 重量)
+(western, 西方的)
+(whisper, 耳語)
+(whole, 整個的)
+(wide, 寬的)
+(wild, 野生的)
+(wing, 翅膀)
+(wisdom, 智慧)
+(worker, 工人/工作者)
+(worth, 價值)
+(wound, 傷口/傷害)
+(wrist, 手腕)
+(yawn, 打哈欠)
+(yell, 喊叫)
+(youth, 青年/青春)
+(zone, 區域)
+
+(accompany, 陪伴)
+(account, 帳戶/解釋)
+(accurate, 準確的)
+(achieve, 達成)
+(adjust, 調整)
+(admire, 欣賞/欽佩)
+(admission, 入場許可/承認)
+(adopt, 採用/領養)
+(afford, 負擔得起)
+(agency, 機構/代理)
+(aisle, 走道/通道)
+(alcohol, 酒精)
+(alert, 警覺的/警報)
+(amateur, 業餘的)
+(ambulance, 救護車)
+(amount, 數量/總額)
+(analyze, 分析)
+(anchor, 錨/主播)
+(anniversary, 週年紀念日)
+(announce, 宣布)
+(annoy, 惹惱)
+(anxiety, 焦慮)
+(apologize, 道歉)
+(appeal, 呼籲/吸引力)
+(appetite, 食慾)
+(apply, 申請/應用)
+(appreciate, 欣賞/感激)
+(apprehend, 逮捕/理解)
+(approach, 接近/方法)
+(approve, 批准/贊成)
+(arbitrary, 任意的/武斷的)
+(arch, 拱門/拱形)
+(archive, 檔案/檔案館)
+(arise, 發生/出現)
+(arrogant, 傲慢的)
+(ascend, 上升/攀登)
+(assist, 協助)
+(associate, 聯想/同事)
+(assume, 假設)
+(assure, 保證)
+(astonish, 使驚訝)
+(astronaut, 太空人)
+(athlete, 運動員)
+(attempt, 嘗試/企圖)
+(attend, 出席/照料)
+(attitude, 態度)
+(attribute, 歸因於/特質)
+(authority, 權威/當局)
+(autonomy, 自治/自主權)
+(available, 可用的)
+(average, 平均)
+(avoid, 避免)
+(awful, 可怕的/糟糕的)
+(awkward, 笨拙的/尷尬的)
+(baggage, 行李)
+(balmy, 溫和的/芳香的)
+(barbaric, 野蠻的)
+(bargain, 討價還價/交易)
+(barrier, 障礙/屏障)
+(basis, 基礎/根據)
+(behalf, 代表)
+(behavior, 行為)
+(benefit, 好處/利益)
+(bet, 打賭)
+(bid, 出價/投標)
+(bitter, 苦的)
+(blame, 責怪)
+(blatant, 公然的/明目張膽的)
+(bless, 祝福)
+(blink, 眨眼)
+(blonde, 金色的(頭髮))
+(blossom, 開花/花)
+(boil, 煮沸)
+(border, 邊界)
+(bow (1) (2), 鞠躬/弓/蝴蝶結)
+(brass, 黃銅)
+(bravery, 勇敢)
+(breath, 呼吸)
+(breathe, 呼吸)
+(broad, 寬廣的)
+(budget, 預算)
+(bulletin, 公告/新聞快報)
+(bush, 灌木)
+(buzz, 嗡嗡聲)
+(cabinet, 櫃子/內閣)
+(campus, 校園)
+(candidate, 候選人)
+(canyon, 峽谷)
+(capable, 有能力的)
+(capital, 首都/資金/大寫字母)
+(career, 職業生涯)
+(cargo, 貨物)
+(casual, 隨意的/非正式的)
+(celebrate, 慶祝)
+(cell, 細胞/單元/牢房)
+(ceremony, 典禮)
+(challenge, 挑戰)
+(channel, 頻道/海峽)
+(chapel, 小禮拜堂)
+(chapter, 章節)
+(charm, 魅力/迷住)
+(chat, 聊天)
+(cheek, 臉頰)
+(cheer, 歡呼)
+(cheerful, 快樂的)
+(chop, 砍/切碎)
+(circus, 馬戲團)
+(civil, 公民的/文明的)
+(civilization, 文明)
+(clap, 鼓掌)
+(classical, 古典的)
+(client, 客戶)
+(clumsy, 笨拙的)
+(cockroach, 蟑螂)
+(code, 代碼/密碼)
+(collar, 衣領)
+(collection, 收藏/收集品)
+(colony, 殖民地)
+(combine, 結合)
+(command, 命令/指揮)
+(commerce, 商業/貿易)
+(commit, 承諾/犯(罪))
+(communicate, 溝通)
+(community, 社區)
+(companion, 同伴)
+(competition, 競爭/比賽)
+(competitive, 競爭激烈的)
+(complex, 複雜的/綜合大樓)
+(concern, 關心/擔憂/事務)
+(concrete, 具體的/混凝土)
+(condition, 條件/狀況)
+(confidence, 信心)
+(confuse, 使困惑)
+(congress, 國會)
+(conscious, 有意識的/察覺的)
+(consequence, 結果/後果)
+(consequently, 因此/結果)
+(conservative, 保守的/保守派)
+(consider, 考慮)
+(constant, 持續的/不變的)
+(contaminate, 污染)
+(content (1) (2), 內容/滿足的)
+(contest, 比賽)
+(contract, 合約/收縮)
+(contribute, 貢獻)
+(convenience, 方便/便利設施)
+(cooperate, 合作)
+(coordinate, 協調)
+(copper, 銅)
+(corporate, 公司的/法人的)
+(couch, 長沙發)
+(count, 數數)
+(courage, 勇氣)
+(courtesy, 禮貌/客氣)
+(craft, 工藝/手藝)
+(crash, 碰撞/墜毀)
+(crawl, 爬行)
+(creative, 有創造力的)
+(crew, 全體船員/工作人員)
+(crime, 犯罪)
+(crisis, 危機)
+(criticize, 批評)
+(cruel, 殘酷的)
+(crush, 壓碎/迷戀)
+(culture, 文化)
+(customer, 顧客)
+(damage, 損害)
+(data, 資料)
+(dawn, 黎明)
+(deaf, 聾的)
+(debt, 債務)
+(decade, 十年)
+(declare, 宣布/聲明)
+(decline, 下降/拒絕)
+(decrease, 減少)
+(dedicate, 奉獻)
+(deed, 行為/契約)
+(defeat, 擊敗)
+(defend, 防禦)
+(demand, 要求/需求)
+(democracy, 民主)
+(demonstrate, 示範/證明)
+(department, 部門/系)
+(depend, 依賴/取決於)
+(deserve, 應得)
+(desire, 渴望)
+(detail, 細節)
+(determine, 決定/確定)
+(device, 裝置/設備)
+(devote, 奉獻/致力於)
+(diagram, 圖表/圖解)
+(dialog/dialogue, 對話)
+(dictate, 口述/命令)
+(differ, 不同)
+(dignity, 尊嚴)
+(dilemma, 困境/兩難)
+(dime, 一角硬幣)
+(dine, 用餐)
+(diplomat, 外交官)
+(disadvantage, 劣勢/不利條件)
+(disagree, 不同意)
+(disappear, 消失)
+(disappoint, 使失望)
+(discipline, 紀律/學科)
+(disease, 疾病)
+(disgust, 厭惡)
+(dismiss, 解散/解僱)
+(display, 展示)
+(disturb, 打擾)
+(document, 文件)
+(domestic, 國內的/家庭的)
+(dominate, 支配/主導)
+(donate, 捐贈)
+(downfall, 衰落/垮台)
+(drift, 漂流)
+(drought, 乾旱)
+(dull, 遲鈍的/無趣的)
+(dye, 染色)
+(dynamic, 動態的/有活力的)
+(eager, 渴望的)
+(earthquake, 地震)
+(economy, 經濟)
+(editor, 編輯)
+(effect, 影響/效果)
+(efficient, 有效率的)
+(elegant, 優雅的)
+(embarrass, 使尷尬)
+(emerge, 浮現/出現)
+(emotion, 情感)
+(emphasize, 強調)
+(employ, 僱用/使用)
+(enable, 使能夠)
+(encourage, 鼓勵)
+(endanger, 危及)
+(engage, 從事/訂婚)
+(enhance, 提升/增強)
+(enjoy, 享受)
+(enlarge, 擴大)
+(entertain, 娛樂)
+(entire, 整個的)
+(envy, 嫉妒)
+(equal, 相等的)
+(equipment, 設備)
+(era, 時代)
+(error, 錯誤)
+(essential, 必要的/精華)
+(establish, 建立)
+(estimate, 估計)
+(ethnic, 種族的)
+(evaluate, 評估)
+(exaggerate, 誇大)
+(examine, 檢查/考試)
+(excellent, 優秀的)
+(exchange, 交換)
+(excitement, 興奮)
+(exist, 存在)
+(expand, 擴展)
+(expect, 期待)
+(expense, 費用/支出)
+(explore, 探索)
+(expose, 暴露)
+(extend, 延伸)
+(extra, 額外的)
+(fabric, 布料/結構)
+(facility, 設施/場所)
+(factor, 因素)
+(fancy, 花俏的/喜歡/幻想)
+(fare, 車費)
+(fault, 錯誤/缺點)
+(favor, 恩惠/偏愛)
+(feature, 特徵/特色)
+(fellow, 同伴/同事)
+(ferry, 渡輪)
+(fiction, 小說/虛構)
+(fierce, 兇猛的/激烈的)
+(finance, 財務/金融)
+(flexible, 有彈性的/靈活的)
+(flood, 洪水/淹沒)
+(flour, 麵粉)
+(flow, 流動)
+(fold, 折疊)
+(fond, 喜歡的)
+(forever, 永遠)
+(formal, 正式的)
+(former, 以前的)
+(fortune, 財富/運氣)
+(foundation, 基礎/基金會)
+(fraction, 分數/部分)
+(frank, 坦白的)
+(freeze, 結冰)
+(frequent, 頻繁的)
+(fry, 炸/煎)
+(funeral, 葬禮)
+(further, 更遠的/進一步地)
+(gap, 缺口/差距)
+(gather, 聚集)
+(gay, 快樂的/同性戀的)
+(generation, 世代)
+(glance, 瞥見)
+(glare, 怒視/刺眼的光)
+(global, 全球的)
+(glove, 手套)
+(glow, 發光)
+(gossip, 八卦)
+(govern, 統治/管理)
+(grace, 優雅/恩典)
+(grade, 年級/等級/分數)
+(graduate, 畢業)
+(grain, 穀物/顆粒)
+(grant, 授予/撥款)
+(grasp, 抓住/理解)
+(greedy, 貪婪的)
+(grin, 露齒而笑)
+(gross, 總共的/粗俗的)
+(guarantee, 保證)
+(gum, 口香糖/牙齦)
+(gymnasium/gym, 體育館/健身房)
+(handkerchief, 手帕)
+(hardware, 硬體/五金)
+(harm, 傷害)
+(haze, 霾/薄霧/迷糊)
+(headache, 頭痛)
+(hell, 地獄)
+(hero, 英雄)
+(hesitate, 猶豫)
+(honor, 榮譽)
+(horizon, 地平線/眼界)
+(hostage, 人質)
+(household, 家庭/家務)
+(humor, 幽默)
+(hurry, 匆忙)
+(hypothesis, 假設)
+(identify, 識別)
+(ignite, 點燃/引燃)
+(illegal, 非法的)
+(illustrate, 插圖/說明)
+(imagine, 想像)
+(imitate, 模仿)
+(immigrate, 移居入境)
+(impact, 影響/衝擊)
+(impatient, 不耐煩的)
+(implement, 實施/工具)
+(impose, 強加/徵稅)
+(impress, 印象深刻)
+(incident, 事件/插曲)
+(income, 收入)
+(increase, 增加)
+(indeed, 確實)
+(indicate, 指出/表明)
+(individual, 個別的/個人)
+(industry, 工業/行業)
+(inevitable, 不可避免的)
+(infect, 感染)
+(inflate, 使膨脹/通貨膨脹)
+(influence, 影響)
+(inform, 通知)
+(infrastructure, 基礎設施)
+(inquire, 詢問)
+(insert, 插入)
+(inspect, 檢查)
+(inspire, 啟發)
+(instant, 立即的/瞬間)
+(institute, 協會/機構)
+(instruct, 指導)
+(insult, 侮辱)
+(insurance, 保險)
+(integrate, 整合/融入)
+(intellectual, 智力的/知識分子)
+(intense, 強烈的)
+(intention, 意圖)
+(interfere, 干涉/妨礙)
+(intermediate, 中級的/中間的)
+(interpret, 解釋/口譯)
+(intimate, 親密的)
+(invest, 投資)
+(involve, 涉及/包含)
+(issue, 議題/發行)
+(item, 項目/一件)
+(jealous, 嫉妒的)
+(jewel, 珠寶)
+(journalism, 新聞業)
+(jungle, 叢林)
+(junior, 年少的/下級的)
+(justify, 證明...是正當的)
+(labor, 勞動/勞工)
+(landlord, 房東)
+(lawn, 草坪)
+(layoff, 解僱/裁員)
+(league, 聯盟)
+(legislature, 立法機關)
+(leisure, 休閒)
+(length, 長度)
+(liable, 有責任的/可能...的)
+(liberal, 自由的/慷慨的)
+(limitation, 限制)
+(literary, 文學的)
+(locate, 定位/坐落於)
+(logic, 邏輯)
+(loose, 鬆的)
+(loyal, 忠誠的)
+(luxury, 奢侈/奢侈品)
+(machine, 機器)
+(magazine, 雜誌)
+(magician, 魔術師)
+(magnificent, 宏偉的)
+(maintain, 維持/保養)
+(major, 主要的/主修)
+(male, 男性的/雄性)
+(manage, 管理/經營)
+(manipulate, 操縱)
+(mansion, 大廈/豪宅)
+(manual, 手冊/手工的)
+(manufacture, 製造)
+(margin, 邊緣/利潤)
+(marvelous, 了不起的)
+(mass, 大眾/大量/質量)
+(masterpiece, 傑作)
+(maturity, 成熟)
+(maximum, 最大值)
+(mayor, 市長)
+(measure, 測量)
+(mechanism, 機制/機械裝置)
+(medal, 獎章/勳章)
+(media, 媒體)
+(medical, 醫學的)
+(memorize, 記憶)
+(merchant, 商人)
+(mercy, 仁慈/憐憫)
+(mess, 混亂/髒亂)
+(messy, 髒亂的)
+(minor, 次要的/未成年人)
+(misery, 痛苦/悲慘)
+(mission, 任務/使命)
+(moan, 呻吟)
+(mobile, 可移動的/手機)
+(modest, 謙虛的/適度的)
+(modify, 修改)
+(moist, 潮濕的)
+(monitor, 監測/螢幕)
+(moral, 道德的)
+(moth, 蛾)
+(motion, 移動/動作)
+(motive, 動機)
+(multiple, 多個的)
+(mystery, 神秘/謎團)
+(myth, 神話)
+(navy, 海軍)
+(nearby, 在附近的)
+(neat, 整潔的)
+(negative, 負面的/消極的)
+(negotiate, 談判)
+(nonsense, 胡說八道)
+(normal, 正常的)
+(numerous, 許多的)
+(obey, 服從)
+(object, 物體/反對)
+(observe, 觀察/遵守)
+(obtain, 獲得)
+(occupy, 佔領/佔據)
+(occur, 發生)
+(odd, 奇怪的/奇數的)
+(oppose, 反對)
+(ordinary, 普通的)
+(outcome, 結果)
+(overcome, 克服)
+(owe, 虧欠)
+(oxygen, 氧氣)
+(pack, 打包/包裹)
+(panic, 恐慌)
+(parcel, 包裹)
+(parlor, 客廳/店鋪)
+(participate, 參與)
+(partner, 夥伴)
+(passion, 熱情)
+(pat, 輕拍)
+(patience, 耐心)
+(patient, 病人/有耐心的)
+(peak, 山峰/頂點)
+(peer, 同儕/凝視)
+(penalty, 懲罰/罰款)
+(penny, 便士(小硬幣))
+(percentage, 百分比)
+(perform, 表演/執行)
+(permanent, 永久的)
+(persuade, 說服)
+(petrol, 汽油)
+(phenomenon, 現象)
+(philosophy, 哲學)
+(physicist, 物理學家)
+(physiologist, 生理學家)
+(pioneer, 先鋒/開拓者)
+(pity, 憐憫/可惜)
+(pleasure, 樂趣)
+(polish, 磨光/擦亮)
+(politician, 政治家)
+(politics, 政治)
+(pollute, 污染)
+(possess, 擁有)
+(possibility, 可能性)
+(postpone, 延期)
+(potential, 潛力/潛在的)
+(pour, 傾倒/下大雨)
+(poverty, 貧窮)
+(practical, 實用的)
+(precious, 珍貴的)
+(predict, 預測)
+(premier, 總理/首要的)
+(preserve, 保存/維護)
+(previous, 先前的)
+(prime, 主要的/最佳的)
+(principle, 原則)
+(priority, 優先權)
+(privacy, 隱私)
+(process, 過程/處理)
+(progress, 進步)
+(property, 財產/性質)
+(propose, 提議/求婚)
+(protest, 抗議)
+(publication, 出版物/發行)
+(publicity, 宣傳/名聲)
+(purpose, 目的)
+(quarrel, 爭吵)
+(questionnaire, 問卷)
+(quote, 引用/報價)
+(radical, 激進的/根本的)
+(rag, 破布)
+(random, 隨機的)
+(rarely, 很少)
+(ray, 光線)
+(react, 反應)
+(reality, 現實)
+(realize, 意識到/實現)
+(rebel, 反抗/叛徒)
+(recall, 回想/召回)
+(recognize, 認出)
+(recommend, 推薦)
+(recover, 恢復/找回)
+(refer, 參考/提到)
+(reflect, 反映/反思)
+(reform, 改革)
+(regulate, 管制/規定)
+(reject, 拒絕)
+(relative, 親戚/相對的)
+(release, 釋放/發行)
+(reliable, 可靠的)
+(relief, 減輕/救濟)
+(relieve, 減輕)
+(remark, 言論/評論)
+(remote, 遙遠的/偏僻的)
+(require, 要求)
+(rescue, 拯救)
+(reserve, 保留/儲備)
+(resist, 抵抗)
+(respect, 尊敬)
+(responsible, 負責任的)
+(restrict, 限制)
+(retail, 零售)
+(retort, 反駁/回嘴)
+(retreat, 撤退/退隱處)
+(retrieve, 取回/找回)
+(reveal, 揭露/顯示)
+(revenue, 收入/稅收)
+(revive, 復興/恢復)
+(revolt, 反抗/叛變)
+(rigid, 僵硬的/嚴格的)
+(rivalry, 競爭/對抗)
+(sarcasm, 諷刺/挖苦)
+(scandal, 醜聞)
+(scarcity, 稀少/缺乏)
+(scenic, 風景優美的)
+(scorn, 輕蔑/嘲笑)
+(scrutiny, 詳細檢查/監視)
+(segment, 部分/片段)
+(seize, 抓住/奪取)
+(seldom, 很少/不常)
+(sensational, 轟動的/聳人聽聞的)
+(shabby, 破舊的/衣衫襤褸的)
+(shear, 剪/剪羊毛)
+(sheer, 純粹的/極薄的)
+(shove, 推擠)
+(shrewd, 精明的/敏銳的)
+(sideline, 副業/場邊)
+(simulate, 模擬/假裝)
+(simultaneous, 同時發生的)
+(slaughter, 屠殺/宰殺)
+(slot, 狹縫/位置/投幣口)
+(smash, 打碎/猛撞)
+(snatch, 攫取/抓住)
+(sneer, 嘲笑/輕蔑地笑)
+(solely, 單獨地/僅僅)
+(sore, 疼痛的/痛處)
+(sovereign, 主權獨立的/君主)
+(speculate, 推測/投機)
+(spine, 脊椎/書脊)
+(splendid, 華麗的/極好的)
+(splendor, 光輝/壯麗)
+(spouse, 配偶)
+(squander, 浪費/揮霍)
+(statistic(s), 統計數字/統計學)
+(steer, 駕駛/引導)
+(stern, 嚴厲的/船尾)
+(stifle, 抑制/使窒息)
+(stipulate, 規定/約定)
+(stroll, 漫步/閒逛)
+(submerge, 淹沒/潛入水中)
+(subordinate, 下屬/次要的)
+(subsidiary, 子公司的/輔助的)
+(subtle, 微妙的/難以捉摸的)
+(succession, 連續/繼承)
+(sufficient, 足夠的)
+(superior, 較優越的/上級)
+(superstition, 迷信)
+(supplement, 補充/補給品)
+(supply, 供應)
+(support, 支持)
+(surface, 表面)
+(surgeon, 外科醫生)
+(surplus, 剩餘/過剩)
+(survey, 調查)
+(swear, 發誓/咒罵)
+(system, 系統)
+(tale, 故事)
+(talent, 天賦)
+(tar, 焦油)
+(taste, 味道/品味)
+(technique, 技巧/技術)
+(temper, 脾氣)
+(temporary, 暫時的)
+(tendency, 傾向)
+(tension, 緊張/張力)
+(terror, 恐懼)
+(theory, 理論)
+(therapist, 治療師)
+(therapy, 治療/療法)
+(thereafter, 此後/之後)
+(thereby, 因此/從而)
+(thermometer, 溫度計)
+(threshold, 門檻/開端)
+(thrift, 節儉)
+(thrifty, 儉的)
+(thrive, 繁榮/興盛)
+(throb, 搏動/跳動)
+(threat, 威脅)
+(threaten, 威脅)
+(tickle, 搔癢)
+(tightly, 緊緊地)
+(timber, 木材)
+(timid, 膽小的)
+(tissue, 組織/面紙)
+(title, 標題/頭銜)
+(tobacco, 菸草)
+(toll (1) (2), 通行費/傷亡人數)
+(topple, 推翻/倒下)
+(tornado, 龍捲風)
+(toss, 拋/擲)
+(tough, 堅韌的/困難的)
+(tourism, 觀光業)
+(tourist, 觀光客)
+(toward(s), 朝向)
+(trace, 追蹤/痕跡)
+(tragedy, 悲劇)
+(trait, 特點/特徵)
+(tranquil, 平靜的/安寧的)
+(tranquilizer, 鎮靜劑)
+(transaction, 交易)
+(transfer, 轉移/轉學)
+(transform, 改變)
+(trash, 垃圾)
+(tremble, 顫抖)
+(trend, 趨勢)
+(tribe, 部落)
+(trifle, 瑣事/少量)
+(trim, 修剪/整齊的)
+(trolley, 手推車/電車)
+(trust, 信任)
+(tube, 管子/地鐵)
+(tuck, 塞進)
+(tuna, 鮪魚)
+(tunnel, 隧道)
+(tyranny, 暴政)
+(ugly, 醜陋的)
+(ulcer, 潰瘍)
+(ultimate, 最終的/極限的)
+(unanimous, 一致同意的)
+(uncover, 揭露)
+(undergo, 經歷)
+(undoubtedly, 毫無疑問地)
+(uniform, 制服)
+(unite, 聯合)
+(universal, 普遍的/宇宙的)
+(unless, 除非)
+(urban, 都市的)
+(urge, 催促/強烈要求)
+(vain, 徒勞的/虛榮的)
+(valve, 閥門/瓣膜)
+(vanish, 消失)
+(variety, 多樣性/種類)
+(vehicle, 車輛)
+(via, 經由)
+(victim, 受害者)
+(violence, 暴力)
+(vision, 視力/遠見)
+(visual, 視覺的)
+(vital, 極重要的/生命的)
+(volunteer, 志願者/志願)
+(wage, 工資/薪水)
+(wander, 漫步/閒逛)
+(warning, 警告)
+(warrant, 授權/搜查令)
+(weapon, 武器)
+(weave, 編織)
+(weep, 哭泣)
+(welfare, 福利)
+(western, 西方的)
+(wherever, 無論何處)
+(whole, 整個的)
+(willing, 願意的)
+(wing, 翅膀)
+(wisdom, 智慧)
+(withdraw, 撤回/提款)
+(witness, 目擊者/作證)
+(worth, 價值)
+(wreck, 殘骸/破壞)
+(wrist, 手腕)
+(yawn, 打哈欠)
+(yell, 喊叫)
+(youth, 青年/青春)
+(zone, 區域)
+`;
+
+        // ----------------------------------------------------------------------
+        // JavaScript 測驗邏輯
+        // ----------------------------------------------------------------------
+
+        let wordList = [];      // 完整的單字庫
+        let quizQuestions = []; // 本次測驗的 10 道題目
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let errorLog = [];      // 記錄錯題
+        let isAnswered = false; // 防止重複點擊
+
+        // --- 工具函式 ---
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function getRandomElements(arr, n, excludeElements = []) {
+            let candidates = arr.filter(item => !excludeElements.includes(item));
+            shuffleArray(candidates);
+            return candidates.slice(0, n);
+        }
+
+        // --- 資料處理 ---
+
+        function parseWordList(data) {
+            const list = [];
+            const lines = data.split('\n').filter(line => line.trim().startsWith('(') && line.includes(','));
+
+            lines.forEach(line => {
+                let content = line.trim().replace(/^\(|\)$/g, '');
+                const firstCommaIndex = content.indexOf(',');
+                if (firstCommaIndex > -1) {
+                    let english = content.substring(0, firstCommaIndex).trim();
+                    let chinese = content.substring(firstCommaIndex + 1).trim();
+                    english = english.replace(/\s*\(\d+\)\s*/g, '').trim();
+
+                    if (english && chinese) {
+                        list.push({ english: english, chinese: chinese });
+                    }
+                }
+            });
+            return list;
+        }
+
+        // --- 測驗邏輯 ---
+
+        function generateQuiz() {
+            if (wordList.length < 10) {
+                alert("字庫數量不足 10 個，無法進行測驗。");
+                return;
+            }
+            
+            // 1. 隨機選取 10 個不重複的題目索引
+            const quizIndices = getRandomElements(Array.from(Array(wordList.length).keys()), 10);
+            
+            // 準備所有中文解釋作為干擾項的來源
+            const allChineseMeanings = wordList.map(item => item.chinese);
+            
+            quizQuestions = [];
+            
+            quizIndices.forEach(index => {
+                const question = wordList[index];
+                
+                // **** 變更點：題目是英文，答案是中文 ****
+                const prompt = question.english;
+                const correctAnswer = question.chinese;
+                
+                // 2. 隨機產生 5 個錯誤選項 (中文)，排除正確答案
+                const distractors = getRandomElements(allChineseMeanings, 5, [correctAnswer]);
+                
+                // 3. 組合所有選項
+                let options = [correctAnswer, ...distractors];
+                shuffleArray(options);
+                
+                quizQuestions.push({
+                    prompt: prompt,         // 顯示英文
+                    correct: correctAnswer, // 正確中文
+                    options: options,       // 混淆後的中文選項
+                    userChoice: null
+                });
+            });
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex >= 10) {
+                showResults();
+                return;
+            }
+
+            isAnswered = false;
+            const currentQ = quizQuestions[currentQuestionIndex];
+            
+            // 更新題號
+            document.getElementById('current-q').textContent = currentQuestionIndex + 1;
+            
+            // 更新英文提示單字
+            document.getElementById('english-word').textContent = currentQ.prompt;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            // 生成選項按鈕
+            currentQ.options.forEach(option => {
+                const button = document.createElement('button');
+                button.classList.add('option-button');
+                button.textContent = option; // 這裡是中文解釋
+                button.onclick = () => handleAnswer(option, button);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function handleAnswer(userChoice, clickedButton) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const currentQ = quizQuestions[currentQuestionIndex];
+            currentQ.userChoice = userChoice;
+            const isCorrect = (userChoice === currentQ.correct);
+
+            // 標記所有選項的狀態
+            document.querySelectorAll('.option-button').forEach(btn => {
+                // 移除 hover 效果
+                // 並標示顏色
+                if (btn.textContent === currentQ.correct) {
+                    btn.classList.add('correct');
+                } else if (btn.textContent === userChoice) {
+                    btn.classList.add('incorrect');
+                }
+                btn.disabled = true;
+            });
+
+            if (isCorrect) {
+                score += 10;
+            } else {
+                errorLog.push({
+                    prompt: currentQ.prompt,
+                    userChoice: userChoice,
+                    correctAnswer: currentQ.correct
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                displayQuestion();
+            }, 1200); // 稍微延長一點時間讓使用者看清楚
+        }
+
+        // --- 流程控制 ---
+
+        function showHome() {
+            document.getElementById('home-page').style.display = 'block';
+            document.getElementById('quiz-page').style.display = 'none';
+            document.getElementById('result-page').style.display = 'none';
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            errorLog = [];
+            generateQuiz();
+            
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('quiz-page').style.display = 'block';
+            document.getElementById('result-page').style.display = 'none';
+
+            displayQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('quiz-page').style.display = 'none';
+            document.getElementById('result-page').style.display = 'block';
+
+            const finalScoreElement = document.getElementById('final-score');
+            const commentaryElement = document.getElementById('score-commentary');
+            const errorDetailsElement = document.getElementById('error-details');
+            const wrongCountElement = document.getElementById('wrong-count');
+            
+            finalScoreElement.textContent = score;
+
+            let commentary = '';
+            if (score === 100) {
+                commentary = '太棒了！滿分通過！🎉';
+                finalScoreElement.style.color = '#28a745';
+            } else if (score >= 80) {
+                commentary = '成績優異，繼續保持！👍';
+                finalScoreElement.style.color = '#17a2b8';
+            } else if (score >= 60) {
+                commentary = '及格了，但還有進步空間喔。💪';
+                finalScoreElement.style.color = '#ffc107';
+            } else {
+                commentary = '請再接再厲，多背幾個單字吧！📚';
+                finalScoreElement.style.color = '#dc3545';
+            }
+            commentaryElement.textContent = commentary;
+
+            wrongCountElement.textContent = errorLog.length;
+            errorDetailsElement.innerHTML = '';
+            
+            if (errorLog.length > 0) {
+                errorLog.forEach(log => {
+                    const li = document.createElement('li');
+                    li.classList.add('error-item');
+                    li.innerHTML = `
+                        <div class="error-header">${log.prompt}</div>
+                        <div class="error-detail">
+                            <span class="user-wrong">您的選擇: ${log.userChoice}</span>
+                            <span class="correct-right">正確解答: ${log.correctAnswer}</span>
+                        </div>
+                    `;
+                    errorDetailsElement.appendChild(li);
+                });
+                document.getElementById('error-section').style.display = 'block';
+            } else {
+                document.getElementById('error-section').style.display = 'none';
+            }
+        }
+
+        window.onload = () => {
+            wordList = parseWordList(rawData);
+            if (wordList.length < 10) {
+                alert(`警告：字庫數量不足 10 個，測驗可能無法正常進行。`);
+            }
+            showHome();
+        };
+
+    </script>
+</body>
+</html>
